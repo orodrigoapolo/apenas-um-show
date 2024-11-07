@@ -7,29 +7,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dragon Ball | Login</title>
     <link rel="stylesheet" href="./css/login.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="./js/sessao.js"></script>
 </head>
 <body>
+    <div class="alerta_erro">
+        <div class="card_erro" id="cardErro">
+            <span id="mensagem_erro">fdsfsdfdsfsdf</span>
+        </div>
+    </div>
     <div class="container">
-        <div>
-            <div>
-                <img src="" alt="">
+        <div class="card-login">
+            <div class="titulo-login">
+                <a href="index.html"><img src="/assets/imgs/btn-voltar.png" alt=""></a>
                 <h2>login</h2>
             </div>
-            <div>
-                <input type="text" placeholder="email">
-                <input type="text" placeholder="senha">
-                <button>Entrar</button>
+            <div class="card-input">
+                <input type="text" id="email_input" placeholder="email">
+                <input type="password" id="senha_input" placeholder="senha">
+                <button onclick="entrar()">Entrar</button>
+                <div id="div_aguardar" class="loading-div">
+                    <img src="./assets/circle-loading.gif" id="loading-gif">
+                </div>
             </div>
         </div>
     </div>
 </body>
 
 </html>
-
 <script>
-
-
     function entrar() {
         aguardar();
 
