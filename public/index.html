@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dragon Ball</title>
+
+    <script src="./js/sessao.js"></script>
+    <link rel="icon" href="./assets/imgs/icon-dragon-ball.png">
+    <link rel="stylesheet" href="./css/estilo.css">
+
+</head>
+<body>
+    <div id="home" class="home">
+        <div class="filtro">
+        <nav>
+            <ul class="menu">
+                <li><img src="/assets/imgs/logo-dragon.png" alt=""></li>
+                <li><a href="#home">home</a></li>
+                <li><a href="#personagens">personagens</a></li>
+                <li><a href="#causa">Causa apoiadas</a></li>
+                <li><a href="#curiosidades">curiosidades</a></li>
+                <li><a href="#sobre">sobre mim</a></li>
+                <li><a href="login.html">login</a></li>
+                <li><a href="cadastro.html">cadastre-se</a></li>
+            </ul>
+        </nav>
+        </div>
+    </div>
+
+    <div id="historia" class="container historia">
+        <div class="titulo">
+            <h1>História</h1>
+            <img src="/assets/imgs/bastao-magico.png" alt="">
+        </div>
+        <div class="card-historia">
+            <div class="card-texto-img">
+                <img src="/assets/imgs/akira.png" alt="">
+                <p class="texto-historia"> Dragon Ball é uma franquia de mídia japonesa criada por Akira Toriyama. Originalmente iniciada com uma série de mangá escrita e ilustrada por Toriyama, foi serializada em capítulos na revista Weekly Shonen Jump de 1984 a 1995. Os 519 capítulos foram compilados em 42 volumes tankōbon e publicados pela editora Shueisha (集英社). Dragon Ball foi inicialmente inspirado pelo clássico romance chinês Jornada ao Oeste.
+                    A série segue as aventuras do protagonista, Son Goku, desde sua infância até a idade adulta enquanto ele treina artes marciais e explora o mundo em busca de sete esferas conhecidas como as Esferas do Dragão, que convocam um dragão que concede um desejo quando reunidas. Ao longo de sua jornada, Goku faz vários amigos e luta contra uma grande variedade de vilões, muitos dos quais também procuram as Esferas do Dragão.
+                </p>
+            </div>
+            <div class="card-texto-img">
+                <p class="texto-historia">
+                    O mangá Dragon Ball foi adaptado em duas séries de anime pela Toei Animation: Dragon Ball e Dragon Ball Z, que, juntas, foram transmitidas no Japão de 1986 a 1996. Além disso, o estúdio desenvolveu 20 longas-metragens animadas e três especiais de televisão, assim como duas séries de anime, intituladas Dragon Ball GT (1996–1997) e Dragon Ball Super (2015–2018). De 2009 a 2015, uma versão remake e acelerada de Dragon Ball Z foi exibida no Japão sob o título Dragon Ball Kai, na qual a maior parte das cenas da versão original que não aparecem no mangá foram removidas. Várias empresas desenvolveram diversas adaptações da série de mangá, tornando-a uma grande e popular franquia de mídia que inclui filmes animados e em live-action, jogos de cartas colecionáveis, inúmeras figuras de ação, além de várias coleções de trilhas sonoras e um grande número de jogos eletrônicos. A partir de novembro de 2014, a franquia gerou US$ 5 bilhões em mercadorias, tornando Dragon Ball uma das franquias de mídia baseadas em mangá mais comercializadas de todos os tempos.
+                </p>
+                <img src="/assets/imgs/goku-pequeno.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div id="personagens" class="container personagens">
+        <div class="titulo">
+            <h1>Personagens</h1>
+            <img src="/assets/imgs/bastao-magico.png" alt="">
+        </div>
+        <div class="fundo-personagens">
+            <img id="fotoPersonagem" src="assets/imgs/img-goku.png" alt="">
+            <div class="texto-historia">
+                <h1 id="nomePersonagem">Goku</h1>
+                <p id="textoPersonagem">
+                    GOku é o protagonista das franquias Dragon Ball. Ele é neto adotivo de Vovô Gohan, filho de Bardock e Gine, o irmão mais novo de Raditz, o marido de Chichi, pai de Gohan e Goten, avô de Pan e mais tarde tataravô de Goku Jr. Sua primeira aparição ocorreu em 1984, no primeiro capítulo do mangá Dragon Ball, publicado na revista Weekly Shōnen Jump. Goku é inspirado em Sun Wukong, personagem do romance Jornada ao Oeste. Porém, Toriyama mudou algumas de suas características para ser mais original. Goku é apresentado como um menino estranho com rabo de macaco e força sobre-humana.
+
+                    Alegre, corajoso, e também um pouco ingênuo, Goku é um Saiyajin originalmente enviado à Terra quando criança com a missão de destruí-la. Porém, um acidente altera sua memória, fazendo-o crescer com um coração puro e depois se torna o maior defensor da Terra, e também o líder informal dos Guerreiros Z. Através da sua vida, ele treina duro e deseja ser o melhor guerreiro possível, e ao mesmo tempo usando sua força incrível para manter a paz.
+                </p>
+            </div>
+        </div>
+        <div class="img-esferas">
+            <img id="esfera1" class="foto-esfera" onclick="trocaPersonagens(0)" src="assets/imgs/esfera-1-raio.png" alt="">
+            <img id="esfera2" class="foto-esfera" onclick="trocaPersonagens(1)" src="assets/imgs/esfera-2.png" alt="">
+            <img id="esfera3" class="foto-esfera" onclick="trocaPersonagens(2)" src="assets/imgs/esfera-3.png" alt="">
+            <img id="esfera4" class="foto-esfera" onclick="trocaPersonagens(3)" src="assets/imgs/esfera-4.png" alt="">
+            <img id="esfera5" class="foto-esfera" onclick="trocaPersonagens(4)" src="assets/imgs/esfera-5.png" alt="">
+            <img id="esfera6" class="foto-esfera" onclick="trocaPersonagens(5)" src="assets/imgs/esfera-6.png" alt="">
+        </div>
+    </div>
+
+    <div id="causa" class="container causa">
+        <div class="titulo">
+            <h1>Causa Apoiadas</h1>
+            <img src="/assets/imgs/bastao-magico.png" alt="">
+        </div>
+        <div class="card-causa">
+            <div>
+                <img src="/assets/imgs/causa16.png" alt="">
+            </div>
+            <img src="/assets/imgs/goku-nuvem.png" alt="">
+            <div class="esferas-causas">
+                <img src="/assets/imgs/causa4.png" alt="">
+                <img src="/assets/imgs/causa3.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div id="curiosidades" class="container curiosidades">
+        <div class="titulo">
+            <h1>Curiosidades</h1>
+            <img src="/assets/imgs/bastao-magico.png" alt="">
+        </div>
+        <div class="container-curiosidades">
+            <img src="/assets/imgs/bulma.png" alt="">
+            <div class="container-card-curiosidades">
+                <div class="card-curiosidades">
+                    <img src="/assets/imgs/androids.png" alt="">
+                    <div>
+                        <h2 class="titulo-curiosidade">O Exterminador do Futuro!</h2>
+                        <p class="texto-curiosidade">
+                            Akira Toriyama é conhecido por tirar inspiração para seus trabalhos de diversas outras obras.
+                                Não é surpresa que a saga dos androides tenha sido inspirada em nada menos que O Exterminador do Futuro.
+                                As duas histórias começam com um viajante do tempo, que volta ao passado para avisar aos protagonistas de que o futuro está um caos devido a uma inteligência artificial fora de controle. Os robôs dominam o planeta e praticamente exterminaram a raça humana, mas tudo isso pode ser evitado caso uma única pessoa sobreviva.
+                                Para deixar a homenagem ainda mais clara, T-800 foi mandado para matar Sarah Connor no dia 12 de maio. Quando Trunks do futuro conversa com os outros Guerreiros Z, ele diz que os ataques começam no dia 12 de maio.
+                        </p>
+                    </div>
+                </div>
+                <div class="card-curiosidades">
+                    <img src="/assets/imgs/gohan-face.png" alt="">
+                    <div>
+                        <h2 class="titulo-curiosidade">O protagonismo de Gohan!</h2>
+                        <p class="texto-curiosidade">
+                            Se analisarmos o desenvolvimento da trama, percebemos que o anime dava todos os indícios de que Gohan acabaria se tornando o protagonista de Dragon Ball Z.
+                            Desde a luta contra Raditz, até a saga de Cell, vemos uma evolução absurda do personagem. Além do mais, sempre fica subentendido que o primogênito de Goku possui um incrível poder guardado em seu interior.
+                            Akira Toriyama já tentou, por diversas vezes, matar Goku e passar o protagonismo a outro personagem, mas os produtores, e principalmente o público, não admitem que o personagem seja deixado para trás. Por isso, o criador se vê obrigado a trazê-lo de volta de maneiras mirabolantes e colocá-lo sempre no centro da história.
+                        </p>
+                    </div>
+                </div>
+                <div class="card-curiosidades">
+                    <img src="/assets/imgs/goku-picolo.png" alt="">
+                    <div>
+                        <h2 class="titulo-curiosidade">Torneio de artes marciais</h2>
+                        <p class="texto-curiosidade">
+                            Goku é um veterano do Torneio de Artes Marciais, o principal evento de luta do universo Dragon Ball. Ele participou do torneio várias vezes, enfrentando muitos adversários formidáveis ao longo dos anos. No entanto, apesar de suas impressionantes habilidades de combate, Goku só ganhou o torneio uma vez, quando derrotou Piccolo na final. Acho que nem sempre se pode ganhar, certo?
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sobre" class="container sobre-mim">
+        <div class="titulo">
+            <h1>Sobre mim</h1>
+            <img src="/assets/imgs/bastao-magico.png" alt="">
+        </div>
+        <div class="card-sobre-mim">
+            <p>
+                OI eu so o Rodrigo, tenho 18 anos, faço Analise e Desenvolvimento de Sistemas na faculdade SPTECH e sou fã do Dragon Ball, a onde ele entrou na minha vida num daqueles momentos que a gente nunca esquece. Eu ficava na casa da minha avó esperando a tia da piruá para me levar à escola. Era um período meio parado e um pouco de espera, mas tinha TV Globinho para me distrair. Passavam vários desenhos, como Três Espiãs Demais e As Aventuras de Jackie Chan, mas era Dragon Ball que eu gostava bastante. Eu levantava a mão junto com o Goku na hora da genki dama, torcendo, como se minha energia pudesse ajudar. 
+            </p>
+            <img src="/assets/imgs/rodrigo.png" alt="">
+        </div>
+    </div>
+    <footer class="container footer">
+        <div class="menu-footer">
+            <img src="/assets/imgs/logo-dragon.png" alt="">
+            <div class="card-menu-footer">
+                <h5 class="titulo-menu-footer">Informações</h5>
+                <ul class="nav-footer">
+                    <li><a href="#home">home</a></li>
+                    <li><a href="#historia">história</a></li>
+                    <li><a href="#personagens">personagens</a></li>
+                    <li><a href="#causa">Causa Apoiadas</a></li>
+                    <li><a href="#curiosidades">Curiosidades</a></li>
+                    <li><a href="#sobre">sobre mim</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-menu-footer">
+            <h5 class="titulo-menu-footer">contato:</h5>
+            <div class="footer-contato">
+                <a href="mailto:rodrigoapolodev@gmail.com"><img src="/assets/imgs/email.png" alt=""></a>
+                <a href="https://www.linkedin.com/in/rodrigogdsantos/"><img src="/assets/imgs/linkedin.png" alt=""></a>
+                <a href="https://github.com/orodrigoapolo"><img src="/assets/imgs/github.png" alt=""></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+<script>
+    function trocaPersonagens(numPersonagem){
+        numPersonagem = Number(numPersonagem)
+        var listaPersonagens = [
+            {
+                nome: 'Goku',
+                texto: 'Goku é o protagonista das franquias Dragon Ball. Ele é neto adotivo de Vovô Gohan, filho de Bardock e Gine, o irmão mais novo de Raditz, o marido de Chichi, pai de Gohan e Goten, avô de Pan e mais tarde tataravô de Goku Jr. Sua primeira aparição ocorreu em 1984, no primeiro capítulo do mangá Dragon Ball, publicado na revista Weekly Shōnen Jump. Goku é inspirado em Sun Wukong, personagem do romance Jornada ao Oeste. Porém, Toriyama mudou algumas de suas características para ser mais original. Goku é apresentado como um menino estranho com rabo de macaco e força sobre-humana. Alegre, corajoso, e também um pouco ingênuo, Goku é um Saiyajin originalmente enviado à Terra quando criança com a missão de destruí-la. Porém, um acidente altera sua memória, fazendo-o crescer com um coração puro e depois se torna o maior defensor da Terra, e também o líder informal dos Guerreiros Z. Através da sua vida, ele treina duro e deseja ser o melhor guerreiro possível, e ao mesmo tempo usando sua força incrível para manter a paz.',
+                foto: 'img-goku.png'
+            },
+            {
+                nome: 'Vegeta',
+                texto: 'Príncipe Vegeta é o príncipe da raça Saiyajin e arqui-rival de Goku. Ele é o filho mais velho de Vegeta III, o irmão mais velho de Tarble, o marido de Bulma, o pai de Trunks e Bra, e tataravô de Vegeta Jr. Junto com Goku, Gohan, e Piccolo, ele é facilmente um dos personagens mais prominentes da série, recebendo mais desenvolvimento após ser introduzido do que vários personagens. Régio, egoísta e cheio de orgulho, Vegeta foi antes um cruel guerreiro e mercenário, mas depois abandona seu papel no Exército Galáctico de Freeza, mas opta a ficar e morar na Terra, lutando junto aos Guerreiros Z; enquanto tenta ser o melhor guerreiro do universo, especificamente com a missão de derrotar e ultrapassar Goku em poder. Seu personagem evolui de vilão para anti-herói, e depois protagonista ao decorrer da série.',
+                foto: 'vegeta.png'
+            },
+            {
+                nome: 'Gohan',
+                texto: 'Gohan é o primeiro filho do protagonista da série Goku e sua esposa Chichi, o mais irmão mais velho de Goten, o esposo de Videl e pai de Pan. Gohan é o primeiro híbrido (meio terráqueo, meio Saiyajin) a aparecer nas séries. Ele é nomeado após o avô adotivo de Goku, Gohan. Diferente de seu pai, Gohan não tem paixão por lutas e prefere fazê-lo apenas quando precisa defender seus amigos. Porém, Gohan luta com os Guerreiros Z para defesa da Terra durante grande parte da sua vida. Ele eventualmente estabelece uma família ao fim de Dragon Ball Z, optando pela vida de entomólogo.',
+                foto: 'gohan.png'
+            },
+            {
+                nome: 'Piccolo',
+                texto: 'Piccolo é a reencarnação Namekuseijin e filho final de Piccolo Daimaoh e também o vilão final no anime Dragon Ball, e um protagonista em Dragon Ball Z, Dragon Ball GT, e Dragon Ball Super. De acordo com o Grande Patriarca, Piccolo assim como Kami-Sama e Piccolo Daimaoh, são parte do Clã Dragão, que são os criadores originais das Esferas do Dragão. Um sábio e inteligente estrategista que era originalmente um inimigo de Goku, Piccolo vira um membro permanente dos Guerreiros Z, especialmente após ele formar um laço próximo com o filho de Goku, Gohan, quando estavam treinando em preparação para a chegada de Nappa e Vegeta.',
+                foto: 'piccolo.png'
+            },
+            {
+                nome: 'Mestre Kame',
+                texto: 'Mestre Kame é um antigo e sábio mestre de artes marciais, e o primeiro personagem a usar o conhecido Kamehameha. Embora ele pareça frágil, Kame é na verdade um guerreiro poderoso. Ele treinou Vovô Gohan, Rei Cutelo, Goku, Kuririn e Yamcha. Mestre Kame é ambos os arquétipos velho sábio e velho pervertido, o último sendo típico de mangas "shonen". Às vezes, ele fica irritado, e produz alívio cômico. Seus companheiros são geralmente Oolong, Tartaruga, e Launch. Sua casa é a Casa do Kame, uma casa numa ilha isolada que serve como local de encontro para seus amigos.',
+                foto: 'mestre-kame.png'
+            },
+            {
+                nome: 'Majin Boo',
+                texto: 'Majin Boo é brincalhão e tem uma personalidade infantil, revelando que ele destrói coisas por diversão apenas por instruções de seu mestre antigo, apenas parando quando lhe é dito que isso é errado. Embora ele seja brincalhão e bobo, seu lado mal é aparente, especialmente quando seus olhos aumentam, e vapor sai dos buracos de seu corpo. Sua raiva extrema mostram-se várias vezes, quando ele lhe insultam, ou quando ele começa a perder a batalha. Ele gosta de tirar a vida dos outros sem remorso, embora seja porque ele trata tudo como um jogo.',
+                foto: 'majin-boo.png'
+            }
+        ]
+
+        var listaEsfera = [
+            {
+                esfera: 'assets/imgs/esfera-1.png',
+                raio: 'assets/imgs/esfera-1-raio.png'
+            },
+            {
+                esfera: 'assets/imgs/esfera-2.png',
+                raio: 'assets/imgs/esfera-2-raio.png'
+            },
+            {
+                esfera: 'assets/imgs/esfera-3.png',
+                raio: 'assets/imgs/esfera-3-raio.png'
+            },
+            {
+                esfera: 'assets/imgs/esfera-4.png',
+                raio: 'assets/imgs/esfera-4-raio.png'
+            },
+            {
+                esfera: 'assets/imgs/esfera-5.png',
+                raio: 'assets/imgs/esfera-5-raio.png'
+            },
+            {
+                esfera: 'assets/imgs/esfera-6.png',
+                raio: 'assets/imgs/esfera-6-raio.png'
+            }
+        ]
+
+        for(var index = 0; index < listaEsfera.length; index++){
+            var imagem = document.getElementById(`esfera${index+1}`)
+
+            if(numPersonagem == index){
+                imagem.src = listaEsfera[index].raio
+            }else{
+                imagem.src = listaEsfera[index].esfera
+            }
+        }
+
+        var personagem = listaPersonagens[numPersonagem]
+
+        nomePersonagem.innerHTML = personagem.nome
+        textoPersonagem.innerHTML = personagem.texto
+        fotoPersonagem.src = `assets/imgs/${personagem.foto}`
+    }
+</script>

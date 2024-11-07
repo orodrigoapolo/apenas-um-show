@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: "Luckiest Guy", cursive;
+}
+
+.container {
+  display: flex;
+}
+
+.filtro{
+  background: linear-gradient(#000000,#ffffff05);
+  width: 100%;
+  position: fixed;
+  top: 0;
+}
+.home{
+  height: 100vh;
+  background-image:  url('../assets/imgs/home.png');
+  background-size: cover;
+  background-position: center; 
+  background-color: rgba(0, 0, 0, 0.712);
+}
+
+.menu{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+}
+
+.menu li{
+  list-style: none;
+  font-size: 1.3rem;
+}
+
+li a{
+  text-decoration: none;
+  color: #D23F28;
+  text-decoration: underline;
+}
+
+.historia{
+  flex-direction: column;
+  justify-content: center;
+  background-color: #D1FCF3;
+}
+
+.titulo{
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  color: #3C3372;
+}
+
+.titulo img{
+  width: 200px;
+  height: 200px;
+  margin-top: -50px;
+}
+
+.titulo h1{
+  margin: 40px auto 0 auto;
+}
+
+.card-historia{
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.card-texto-img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin: 0 40px;
+  margin-top: -100px;
+}
+
+.texto-historia{
+  background-color: white;
+  border: #EB3D0E solid 2px;
+  border-radius: 50px;
+  padding: 30px;
+  color: #383070;
+}
+
+.personagens{
+  flex-direction: column;
+  background-color: #D1FCF3;
+  padding: 0 20% 4% 20%;
+}
+
+.fundo-personagens{
+  background-image:  url('../assets/imgs/shenlong.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center; 
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -100px;
+}
+
+.fundo-personagens .texto-historia{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.img-esferas{
+  display: flex;
+  gap: 20px;
+}
+
+.foto-esfera{
+  cursor: pointer;
+}
+
+.causa{
+  flex-direction: column;
+  background-color: #FFF67A;
+}
+
+.card-causa{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10% 4% 10%;
+  margin-top: -70px;
+}
+
+.esferas-causas{
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.curiosidades{
+  background-color: #7AD4CB;
+  flex-direction: column;
+  padding: 0 10% 4% 10%;
+}
+
+.container-curiosidades{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -70px;
+}
+
+.container-card-curiosidades{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-curiosidades{
+  display: flex;
+  gap: 20px;
+}
+
+.titulo-curiosidade{
+  color: #075115;
+}
+
+.texto-curiosidade{
+  color: #3C3372;
+}
+
+.sobre-mim{
+  flex-direction: column;
+  background-color: #150B36;
+}
+
+.sobre-mim .titulo{
+  color: #FFF67A;
+}
+
+.card-sobre-mim{
+  display: flex;
+  align-items: center;
+  padding: 0 10% 4% 10%;
+  gap: 20px;
+  margin-top: -70px;
+}
+
+.card-sobre-mim p{
+  color: white;
+}
+
+.footer{
+  justify-content: space-between;
+  background-color: #D3550D;
+  padding: 0 10%;
+  height: 100px;
+  height: fit-content;
+}
+
+.menu-footer{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card-menu-footer{
+  margin-top: 20px;
+}
+
+.titulo-menu-footer{
+  color: #150B36;
+}
+.nav-footer{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 80px;
+  gap: 5px;
+}
+
+.nav-footer li{
+  list-style: none;
+}
+
+.nav-footer a{
+  color: white;
+  text-decoration: none;
+}
+
+.footer-contato{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
