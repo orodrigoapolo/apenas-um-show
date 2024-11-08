@@ -21,6 +21,7 @@ function limparSessao() {
 function aguardar() {
     var divAguardar = document.getElementById("div_aguardar");
     divAguardar.style.display = "flex";
+    div_erros_login.style.display = 'none'
 }
 
 function finalizarAguardar(texto) {
