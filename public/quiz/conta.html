@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragon Ball | Conta</title>
+    <link rel="icon" href="../../assets/imgs/icon-dragon-ball.png">
+    <link rel="stylesheet" href="../../css/menu.css">
+    <link rel="stylesheet" href="../../css/conta.css">
+    <script src="../js/sessao.js"></script>
+</head>
+<body onload="validarSessao()">
+    <header class="menu_dashboard">
+        <nav class="menuLateral">
+            <img src="../../assets/imgs/logo-dragon.png" alt="">
+            <ul class="container_lista">
+                <li class="menu_item" >
+                    <div class="container_img disable" >
+                        <img src="../../assets/imgs/inco-quiz.png" alt="">
+                    </div>
+                    <a href="quiz.html">Quiz</a>
+                </li>
+                <li class="menu_item" >
+                    <div class="container_img disable" style="height: 25px;">
+                        <img src="../../assets/imgs/inco-grafico.png" alt="">
+                    </div>
+                    <a href="graficos.html">Graficos</a>
+                </li>
+                <li class="menu_item select">
+                    <div class="container_img">
+                        <img src="../../assets/imgs/inco-conta.png" alt="">
+                    </div>
+                    <a href="conta.html">Conta</a>
+                </li>
+    
+                <li class="menu_item" onclick="limparSessao()">
+                    <div class="container_img disable">
+                        <img src="../../assets/imgs/sair.svg" alt="">
+                    </div>
+                    Sair
+                </li>
+            </ul>
+            <div class="card-conta">
+                <img id="personagemUsuario" src="../../assets/imgs/goku-rosto.png" alt="">
+                <div class="card-nome-email">
+                    <h2 id="nomeUsuario"></h2>
+                    <h4 id="emailUsuario"></h4>
+                </div>
+            </div>
+        </nav>
+    </header>
+</body>
+</html>

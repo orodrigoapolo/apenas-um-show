@@ -2,11 +2,14 @@
 function validarSessao() {
     var email = sessionStorage.EMAIL_USUARIO;
     var nome = sessionStorage.NOME_USUARIO;
+    var personagem = sessionStorage.PERSONAGEM_USUARIO;
 
     var b_usuario = document.getElementById("b_usuario");
 
     if (email != null && nome != null) {
-        b_usuario.innerHTML = nome;
+        nomeUsuario.innerHTML = nome;
+        emailUsuario.innerHTML = email;
+        personagemUsuario.src = `../../assets/imgs/${personagem}-rosto.png`.toLocaleLowerCase();
     } else {
         window.location = "../login.html";
     }

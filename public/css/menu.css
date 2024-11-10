@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+
+}
+
+body{
+    display: flex;
+}
+
+
+.menu_dashboard{
+    display: flex;
+    width: 20%;
+    background-color: #D23F28;
+    max-height: 100%;
+    height: auto;
+}
+
+
+.boasVindas .container {
+    width: 92%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menuLateral {
+    color: #ffffff;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 70px;
+
+    height: 100vh;
+}
+
+.menuLateral img{
+    width: 73%;
+}
+
+.menuLateral a{
+    color: #ffffff;
+    align-self: center;
+    text-decoration: none;
+}
+
+.container_lista{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;    
+    justify-content: center;
+}
+
+.menu_item{
+    align-self: center;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 14px;
+    border: solid 2px #E70015;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    height: 35px;
+    padding: 5px 12px;
+    width: 65%;
+    cursor: pointer;
+}
+
+.container_lista .select {
+    color: white;
+    background-color: #FE8200;
+}
+
+.container_lista a {
+    font-size: 16px;
+    
+    padding: 15px 0px;
+    width: 100%;
+}
+
+.container_lista .select a {
+    color: white;
+    font-weight: 600;
+}
+.container_img img{
+    width: 25px;
+}
+.container_img   {
+    height: 26px;
+}
+
+.menu_item:hover {
+    color: white;
+    background-color: #FE8200;
+    
+}
+
+.disable{
+    pointer-events: none;
+}
+
+.card-conta{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.card-conta img{
+    width: 44px;
+    height: 44px;
+    background-color: white;
+    border-radius: 50%;
+    border: solid 2px #E70015;
+}
+
+.card-nome-email h4{
+    font-weight: 500;
+}

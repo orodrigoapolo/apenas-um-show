@@ -1,81 +1,91 @@
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 
 *{
-  margin: 0;
-  padding: 0;
-  font-family: "Luckiest Guy", cursive;
+    margin: 0;
+    padding: 0;
+    font-family: "Luckiest Guy", cursive;
 }
 
 .container{
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    align-items: center;
     
     height: 100vh;
     background-size: cover;
     background-position: center; 
-    background-image: url('/assets/imgs/goku-login.png');
+    background-image: url('/assets/imgs/tela-cadastro.png');
 }
 
-.card-login{
-   background-color: #02162E;
-   border-radius: 10%;
-   border: #51BCC2 solid 2px;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   width: 20%;
-   height: max-content;
-   padding-top: 20px;
-   margin-left: 40px;
-}
-
-.titulo-login{
+.card-cadastro{
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 20px;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #6DC267;
+    border: #174C47 solid 2px;
+    border-radius: 50px;
+    padding: 30px;
 }
 
-.titulo-login img{
+.titulo-cadastro{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.titulo-cadastro img{
     height: 25px;
 }
 
-.titulo-login h2{
-    color: #39B3EB;
+.titulo-cadastro h2{
+    color: #064744;
+    font-weight: 800;
 }
 
 .card-input{
     display: flex;
+    justify-content: center;
     flex-direction: column;
-    align-items: center;
-    margin-top: 30px;
-    width: 100%;
     gap: 20px;
 }
 
 .card-input input{
-    border: #39B3EB solid 2px;
+    border: #9182D5 solid 2px;
     border-radius: 50px;
-    height: 30px;
-    width: 80%;
     text-align: center;
+    height: 30px;
+}
+
+.card-input select{
+    border: #9182D5 solid 2px;
+    border-radius: 50px;
+    text-align: center;
+    height: 30px;
+    cursor: pointer;
 }
 
 .card-input button{
-    background-color: #2D4E84;
-    border: #57CACD solid 2px;
+    background-color: #9182D5;
+    border: #1E4D52 solid 2px;
     border-radius: 50px;
     padding: 10px;
     color: white;
     cursor: pointer;
     margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.texLogin{
+    font-size: 0.8rem;
+    margin: 0 auto;
 }
 
 .loading-div {
     width: 50px;
     display: none;
+    margin: 0 auto;
 }
 
 .loading-div img {
@@ -95,7 +105,7 @@ width: 50px;
     display: none; 
     background-color: #fff;
     color: black;
-    width: 230px;
+    width: 330px;
     position: fixed;
     border-radius: 4px;
     border: #ED145B 3px solid;
@@ -110,10 +120,7 @@ font-size: 20px;
 
 #div_erros_login {
     display: none;
-    color: white;
+    color: red;
     padding-bottom: 10px;
-}
-
-.texCadastro{
-    font-size: 0.8rem;
+    margin: 0 auto;
 }

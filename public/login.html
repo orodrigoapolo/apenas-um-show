@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dragon Ball | Login</title>
     <link rel="stylesheet" href="./css/login.css">
+    <link rel="icon" href="./assets/imgs/icon-dragon-ball.png">
     <script src="./js/sessao.js"></script>
 </head>
 <body>
     <div class="alerta_erro">
         <div class="card_erro" id="cardErro">
-            <span id="mensagem_erro">fdsfsdfdsfsdf</span>
+            <span id="mensagem_erro"></span>
         </div>
     </div>
     <div class="container">
@@ -24,6 +25,7 @@
             <div class="card-input">
                 <input type="text" id="email_input" placeholder="email">
                 <input type="password" id="senha_input" placeholder="senha">
+                <a class="texCadastro" href="cadastro.html">Ainda não tem uma conta?</a>
                 <button onclick="entrar()">Entrar</button>
                 <div id="div_aguardar" class="loading-div">
                     <img src="./assets/circle-loading.gif" id="loading-gif">
@@ -76,10 +78,10 @@
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
+                    sessionStorage.PERSONAGEM_USUARIO = json.personagem
 
                     setTimeout(function () {
-                        window.location = "./dashboard/cards.html";
+                       window.location = "./quiz/quiz.html";                       
                     }, 1000); // apenas para exibir o loading
 
                 });
