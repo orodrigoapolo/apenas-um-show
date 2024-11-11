@@ -49,7 +49,8 @@
             </div>
         </nav>
     </header>
-    <div class="container-dificuldade" id="menu_selecionar_dificuldade">
+
+    <div class="container-dificuldade" id="menu_selecionar_dificuldade" style="display: flex;">
         <div class="card-meneu">
             <h2>Selecione a dificuldade</h2>
             <select id="dificuldade_input">
@@ -58,12 +59,347 @@
               <button onclick="dificuldade()">Selecional</button>
         </div>
     </div>
+
+    <div class="container-dificuldade" id="container_dificuldade_selecionada" style="display: none;">
+        <div class="card-meneu">
+            <div class="titulo-iniciar-quiz">
+                <img onclick="voltarSelecionalDificuldade()" src="/assets/imgs/btn-voltar-preto.png" alt="">
+                <h2>Quiz selecionado</h2>
+            </div>
+            
+            <p id="text_quiz_escolhido">Dificuldade: <br> 
+                Tempo do Quiz: <br>
+                Tempo resposta:
+            </p>
+            <button onclick="iniciarQuiz()">Iniciar Quiz</button>
+        </div>
+    </div>
+
+    <div class="container-quiz" id="container_tela_perguntar" style="display: none;">
+        <div class="card-grupo">
+            <div class="card-placar">
+                <h2 id="texto_acerto">Acertos</h2>
+                <div id="contador_acerto" class="placar">0</div>
+            </div>
+            <div class="card-placar">
+                <h2 id="texto_tempo">Tempo</h2>
+                <div id="placar_tempo" class="placar">00:00:00</div>
+            </div>
+            <div class="card-placar">
+                <h2 id="texto_erro">Erros</h2>
+                <div id="contador_erro" class="placar">0</div>
+            </div>
+        </div>
+
+        <div class="tela-perguntar">
+            <p class="padding-top padding-30">
+                Questão atual: <span id="spanNumeroDaQuestaoAtual"></span> de <span id="qtdQuestoes"></span> questões.
+            </p>
+            <p  id="spanQuestaoExibida" class="padding-30 texto-perguntar">
+               
+            </p>
+            <p class="padding-30">
+                Escolha uma opção dentre as abaixo:
+            </p>
+            <div id="opcoes" class="flex-colunar padding-30">
+                <span>
+                    <input type="radio" id="primeiraOpcao" name="option" class="radio" value="" />
+                    <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
+                </span>
+                <span>
+                    <input type="radio" id="segundaOpcao" name="option" class="radio" value="" />
+                    <label for="segundaOpcao" class="option" id="labelOpcaoDois"></label>
+                </span>
+                <span>
+                    <input type="radio" id="terceiraOpcao" name="option" class="radio" value="" />
+                    <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
+                </span>
+                <span>
+                    <input type="radio" id="quartaOpcao" name="option" class="radio" value="" />
+                    <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
+                </span>
+            </div>
+        </div>
+
+        <div class="card-grupo">
+            <button id="btnSubmeter" onclick="submeter()" class="btn-perguntar">Submeter resposta</button>
+            <button id="btnProx" onclick="avancar()" class="btn-perguntar">Avançar para próxima questão</button>
+        </div>
+        <div id="div_justitificativa" class="container-texto-justificativa" style="display: none;">
+            <p class="padding-30 titulo-justificativa">Justificativa:</p>
+            <p id="justificativa_texto" class="padding-30 texto-justificativa">
+                
+            </p>
+        </div>
+    </div>
+
+    <div id="container_tela_pontuacao_final" class="container-resultado" style="display: none;">
+        <div class="card-meneu">
+            <h2>Pontuação Final</h2>
+            <p id="texto_pontuacao_final">
+               
+            </p>
+            <button onclick="finalizarQuiz()" class="btn-perguntar">Finalizar Quiz</button>
+        </div>
+    </div>
 </body>
 </html>
 <script>
 
     var listaQuiz
+    var quizEscolhido
     var listaPerguntar
+    var quantidadeDeQuestoes
+    var numeroDaQuestaoAtual = 0
+    var pontuacaoFinal = 0
+    var tentativaIncorreta = 0
+    var sec=0
+    var min=0
+    var hr=0
+    var horas = ''
+    var interval
+    var menorHora = new Date(`2024-01-01T23:59:59`);
+    var maiorHora = new Date(`2024-01-01T00:00:00`);
+
+
+    function iniciarQuiz() {
+        
+        container_dificuldade_selecionada.style.display = 'none'
+        container_tela_perguntar.style.display = 'flex'
+
+        qtdQuestoes.innerHTML = quantidadeDeQuestoes
+
+        preencherHTMLcomQuestaoAtual(0)
+
+        btnSubmeter.disabled = false
+        btnProx.disabled = true
+        start()
+    }
+
+    function habilitarAlternativas(trueOrFalse) {
+        let opcaoEscolhida = trueOrFalse ? false : true
+
+        primeiraOpcao.disabled = opcaoEscolhida
+        segundaOpcao.disabled = opcaoEscolhida
+        terceiraOpcao.disabled = opcaoEscolhida
+        quartaOpcao.disabled = opcaoEscolhida
+
+    }
+
+
+    function preencherHTMLcomQuestaoAtual(index) {
+        habilitarAlternativas(true)
+        const questaoAtual = listaPerguntar[index]
+        numeroDaQuestaoAtual = index
+        console.log("questaoAtual")
+        console.log(questaoAtual)
+        spanNumeroDaQuestaoAtual.innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+        spanQuestaoExibida.innerHTML = questaoAtual.pergunta;
+        labelOpcaoUm.innerHTML = questaoAtual.alternativaA;
+        primeiraOpcao.value = questaoAtual.alternativaA;
+        labelOpcaoDois.innerHTML = questaoAtual.alternativaB;
+        segundaOpcao.value = questaoAtual.alternativaB;
+        labelOpcaoTres.innerHTML = questaoAtual.alternativaC;
+        terceiraOpcao.value = questaoAtual.alternativaC;
+        labelOpcaoQuatro.innerHTML = questaoAtual.alternativaD;
+        quartaOpcao.value = questaoAtual.alternativaD;
+        justificativa_texto.innerHTML = questaoAtual.justificativa;
+    }
+
+    function submeter() {
+        pause()
+        const horaAltual = new Date(`2024-01-01T${horas}`);
+
+        //const diferencaEmMs = data2 - data1;
+        //const diferencaEmHoras = diferencaEmMs / (1000 * 60 * 60);
+        //console.log(`A diferença é de ${diferencaEmHoras} horas`);
+
+        if (horaAltual.getTime() > maiorHora.getTime()) {
+            maiorHora = horaAltual
+        } else if (horaAltual.getTime() < menorHora.getTime()) {
+            menorHora = horaAltual
+        }
+        
+        const options = document.getElementsByName("option"); // recupera alternativas no html
+
+        let hasChecked = false
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].checked) {
+                hasChecked = true
+                break
+            }
+        }
+
+        if (!hasChecked) {
+            alert("Não há alternativas escolhidas. Escolha uma opção.")
+        } else {
+            btnSubmeter.disabled = true
+            btnProx.disabled = false
+
+            habilitarAlternativas(false)
+            
+            checarResposta()
+
+            div_justitificativa.style.display = 'flex'
+        }
+    }
+
+    function checarResposta() {
+        const questaoAtual = listaPerguntar[numeroDaQuestaoAtual] // questão atual 
+        const respostaQuestaoAtual = questaoAtual.respostaCorreta // qual é a resposta correta da questão atual
+
+        const options = document.getElementsByName("option"); // recupera alternativas no html
+
+        let alternativaCorreta = null // variável para armazenar a alternativa correta
+
+        options.forEach((option) => {
+            if (option.value === respostaQuestaoAtual) {
+                alternativaCorreta = option.labels[0].id
+                console.log("alternativaCorreta está no componente: " + alternativaCorreta)
+                
+            }
+        })
+
+        // verifica se resposta assinalada é correta
+        options.forEach((option) => {
+            if (option.checked === true && option.value === respostaQuestaoAtual) {
+                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                pontuacaoFinal++
+                contador_acerto.innerHTML = pontuacaoFinal
+                numeroDaQuestaoAtual++
+            } else if (option.checked && option.value !== respostaQuestaoAtual) {
+                const wrongLabelId = option.labels[0].id
+
+                document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
+                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                tentativaIncorreta++
+                contador_erro.innerHTML = tentativaIncorreta
+                numeroDaQuestaoAtual++
+            }
+        })
+    }
+
+    function avancar() {
+        start()
+        btnProx.disabled = true
+        btnSubmeter.disabled = false
+
+        desmarcarRadioButtons()
+
+        if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
+            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+        } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
+            alert("Atenção... a próxima é a ultima questão!")
+            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+        } else {
+            finalizarJogo()
+        }
+        limparCoresBackgroundOpcoes()
+        div_justitificativa.style.display = 'none'
+    }
+
+    function desmarcarRadioButtons() {
+        const options = document.getElementsByName("option");
+        for (let i = 0; i < options.length; i++) {
+            options[i].checked = false;
+        }
+    }
+
+    function finalizarJogo() {
+        let textoParaMensagemFinal = null
+        let classComCoresParaMensagemFinal = null
+        const porcentagemFinalDeAcertos = pontuacaoFinal / quantidadeDeQuestoes
+
+        if (porcentagemFinalDeAcertos <= 0.3) {
+            textoParaMensagemFinal = "Parece que você não estudou..."
+            classComCoresParaMensagemFinal = "text-danger-with-bg"
+        }
+        else if (porcentagemFinalDeAcertos > 0.3 && porcentagemFinalDeAcertos < 0.9) {
+            textoParaMensagemFinal = "Pode melhorar na próxima, hein!"
+            classComCoresParaMensagemFinal = "text-warning-with-bg"
+        }
+        else if (porcentagemFinalDeAcertos >= 0.9) {
+            textoParaMensagemFinal = "Uau, parabéns!"
+            classComCoresParaMensagemFinal = "text-success-with-bg"
+        }
+
+        textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos)*100) + "% das questões."
+        textoParaMensagemFinal += `<br> Quantidade de Perguntas: ${quantidadeDeQuestoes}<br>
+                                    Certas: ${pontuacaoFinal}<br>
+                                    Erradas: ${tentativaIncorreta}<br> `
+
+        document.getElementById('texto_pontuacao_final').innerHTML = textoParaMensagemFinal
+        container_tela_perguntar.style.display = 'none'
+        container_tela_pontuacao_final.style.display = 'flex'
+        btnProx.disabled = true
+        btnSubmeter.disabled = true
+
+    }
+
+    function finalizarQuiz() {
+        window.location.reload()
+    }
+
+    function limparCoresBackgroundOpcoes() {
+        const options = document.getElementsByName("option");
+        options.forEach((option) => {
+            document.getElementById(option.labels[0].id).classList.remove("text-danger-with-bg")
+            document.getElementById(option.labels[0].id).classList.remove("text-success-with-bg")
+        })
+    }
+
+
+
+    function twoDigits(digit){
+        if(digit<10){
+            return('0'+digit)
+        }else{
+            return(digit)
+        }
+    }
+
+    function start(){
+        watch()
+        interval= setInterval(watch,1000)
+    }
+
+    function pause(){
+        clearInterval(interval)
+    }
+
+    function stop(){
+        clearInterval(interval)
+        sec=0
+        min=0
+    }
+
+    function watch(){
+        sec++
+        if(sec==60){
+            min++
+            sec=0
+            if(min==60){
+                min=0
+                hr++
+            }
+        }
+        horas = `${twoDigits(hr)}:${twoDigits(min)}:${twoDigits(sec)}`
+        if(horas == quizEscolhido.tempoResposta){
+            pause()
+        }
+        placar_tempo.innerText= horas
+    }
+
+    function voltarSelecionalDificuldade(){
+        container_dificuldade_selecionada.style.display = 'none'
+        menu_selecionar_dificuldade.style.display = 'flex'
+    }
+
+    function mostrarQuizEscolhido(quiz){
+        text_quiz_escolhido.innerHTML = `Dificuldade: ${quiz.dificuldade}<br> 
+                Tempo do Quiz: ${quiz.tempo} <br>
+                Tempo resposta: ${quiz.tempoResposta}`
+    }
 
     function buscarQuiz(){
         fetch(`/quiz/`, {
@@ -93,7 +429,13 @@
                 .then(function (resposta) {
                     resposta.json().then((perguntas) => {
                         listaPerguntar = perguntas
+
+                        quizEscolhido = listaQuiz.find(q => q.idQuiz == dificuldadeVar)
+                        quantidadeDeQuestoes = listaPerguntar.length
+                        mostrarQuizEscolhido(quizEscolhido)
+
                         menu_selecionar_dificuldade.style.display = 'none'
+                        container_dificuldade_selecionada.style.display = 'flex'
                     });
                 })
                 .catch(function (resposta) {

@@ -156,3 +156,6 @@ WHERE idPersonagem = 1;
 SELECT idQuiz, dificuldade, tempo, tempoResposta
 FROM quiz;
 
+SELECT * FROM perguntar
+WHERE fkQuiz = 1;
+
