@@ -41,7 +41,7 @@ CREATE TABLE perguntar (
     FOREIGN KEY (fkQuiz) REFERENCES quiz(idQuiz)
 );
 
-CREATE TABLE resposta (
+CREATE TABLE resultado (
     idResposta INT AUTO_INCREMENT,
 	fkUsuario INT,
     fkQuiz INT,
@@ -52,7 +52,7 @@ CREATE TABLE resposta (
     erros INT,
     respostaRapida TIME,
     respostaLonga TIME,
-    dtResposta DATETIME,
+    dtResposta DATETIME DEFAULT current_timestamp,
     FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
     FOREIGN KEY (fkQuiz) REFERENCES quiz(idQuiz)
 );
@@ -78,6 +78,9 @@ VALUES ('Fácil', '00:10:00', '00:01:00'),
 		('Média', '00:20:00', '00:02:00'),
 		('Difícil', '00:30:00', '00:03:00');
         
+        
+-- UPDATE quiz set tempo = '00:01:00' where idQuiz = 1;
+
 -- Perguntas fáceis
 INSERT INTO perguntar (pergunta, alternativaA, alternativaB, alternativaC, alternativaD, respostaCorreta, justificativa, fkQuiz) 
 VALUES ('Qual é o nome do planeta natal de Goku?', 'Terra', 'Namekusei', 'Vegeta', 'Sadala', 'Vegeta', 'O planeta natal de Goku é o Planeta Vegeta, onde os Saiyajins nasceram.', 1),
@@ -119,7 +122,7 @@ VALUES ('Quem treinou Goku e Vegeta no Universo 6?', 'Champa', 'Vados', 'Whis', 
 
 
 -- Inserindo respostas
-INSERT INTO resposta (tempoTotal, mediaResposta, acertos, erros, respostaRapida, respostaLonga, dtResposta, fkUsuario, fkQuiz) 
+INSERT INTO resultado (tempoTotal, mediaResposta, acertos, erros, respostaRapida, respostaLonga, dtResposta, fkUsuario, fkQuiz) 
 VALUES ('00:30:00', '00:15:00', 6, 4, '00:20:00', '00:40:00', '2024-11-09 12:30:00', 1, 1),
 		('00:45:00', '00:22:30', 1, 9, '00:30:00', '00:50:00', '2024-11-09 13:00:00', 2, 2),
         ('01:00:00', '00:20:00', 4, 6, '00:25:00', '01:05:00', '2024-11-09 13:30:00', 3, 3),
@@ -139,7 +142,7 @@ SELECT * FROM usuario;
 
 SELECT * FROM quiz;
 
-SELECT * FROM resposta;
+SELECT * FROM resultado;
 
 SELECT * FROM perguntar;
 

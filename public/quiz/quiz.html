@@ -153,13 +153,21 @@
     var numeroDaQuestaoAtual = 0
     var pontuacaoFinal = 0
     var tentativaIncorreta = 0
+    var totalPerguntasRespondidas = 0
     var sec=0
     var min=0
     var hr=0
+    var secP=0
+    var minP=0
+    var hrP=0
     var horas = ''
-    var interval
-    var menorHora = new Date(`2024-01-01T23:59:59`);
-    var maiorHora = new Date(`2024-01-01T00:00:00`);
+    var horaPergunta
+    var tempoPlcar
+    var tempoPergunta
+    var listaHoras = []
+    var menorHora 
+    var maiorHora 
+    var mediaHora 
 
 
     function iniciarQuiz() {
@@ -174,6 +182,7 @@
         btnSubmeter.disabled = false
         btnProx.disabled = true
         start()
+        startPergunta()
     }
 
     function habilitarAlternativas(trueOrFalse) {
@@ -208,18 +217,11 @@
 
     function submeter() {
         pause()
-        const horaAltual = new Date(`2024-01-01T${horas}`);
-
-        //const diferencaEmMs = data2 - data1;
-        //const diferencaEmHoras = diferencaEmMs / (1000 * 60 * 60);
-        //console.log(`A diferença é de ${diferencaEmHoras} horas`);
-
-        if (horaAltual.getTime() > maiorHora.getTime()) {
-            maiorHora = horaAltual
-        } else if (horaAltual.getTime() < menorHora.getTime()) {
-            menorHora = horaAltual
-        }
+        stopPergunta()
+        const horaAltual = new Date(`2024-01-01T${horaPergunta}`);
         
+        listaHoras.push(horaAltual.getTime())
+
         const options = document.getElementsByName("option"); // recupera alternativas no html
 
         let hasChecked = false
@@ -260,6 +262,7 @@
             }
         })
 
+        totalPerguntasRespondidas++
         // verifica se resposta assinalada é correta
         options.forEach((option) => {
             if (option.checked === true && option.value === respostaQuestaoAtual) {
@@ -281,6 +284,7 @@
 
     function avancar() {
         start()
+        startPergunta()
         btnProx.disabled = true
         btnSubmeter.disabled = false
 
@@ -310,6 +314,8 @@
         let classComCoresParaMensagemFinal = null
         const porcentagemFinalDeAcertos = pontuacaoFinal / quantidadeDeQuestoes
 
+        manipularHora()
+
         if (porcentagemFinalDeAcertos <= 0.3) {
             textoParaMensagemFinal = "Parece que você não estudou..."
             classComCoresParaMensagemFinal = "text-danger-with-bg"
@@ -323,17 +329,18 @@
             classComCoresParaMensagemFinal = "text-success-with-bg"
         }
 
-        textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos)*100) + "% das questões."
-        textoParaMensagemFinal += `<br> Quantidade de Perguntas: ${quantidadeDeQuestoes}<br>
+        textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos)*100) + "% das questões.<br><br>"
+        textoParaMensagemFinal += `Quantidade de Perguntas: ${quantidadeDeQuestoes}<br>
+                                    Total de perguntas respondidas: ${totalPerguntasRespondidas}<br>
                                     Certas: ${pontuacaoFinal}<br>
                                     Erradas: ${tentativaIncorreta}<br> `
 
-        document.getElementById('texto_pontuacao_final').innerHTML = textoParaMensagemFinal
+        document.getElementById('texto_pontuacao_final').innerHTML += textoParaMensagemFinal
         container_tela_perguntar.style.display = 'none'
         container_tela_pontuacao_final.style.display = 'flex'
         btnProx.disabled = true
         btnSubmeter.disabled = true
-
+        gravarResultado()
     }
 
     function finalizarQuiz() {
@@ -359,16 +366,15 @@
     }
 
     function start(){
-        watch()
-        interval= setInterval(watch,1000)
+        tempoPlcar = setInterval(watch,1000)
     }
 
     function pause(){
-        clearInterval(interval)
+        clearInterval(tempoPlcar)
     }
 
     function stop(){
-        clearInterval(interval)
+        clearInterval(tempoPlcar)
         sec=0
         min=0
     }
@@ -384,10 +390,55 @@
             }
         }
         horas = `${twoDigits(hr)}:${twoDigits(min)}:${twoDigits(sec)}`
-        if(horas == quizEscolhido.tempoResposta){
-            pause()
+        if(quizEscolhido.tempo == horas){
+            stop()
+            stopPergunta()
+            texto_pontuacao_final.innerHTML = "Seu tempo acabou!<br><br>"
+            finalizarJogo()
         }
         placar_tempo.innerText= horas
+    }
+
+
+    function startPergunta(){
+        tempoPergunta = setInterval(watchPergunta,1000)
+    }
+
+    function pausePergunta(){
+        clearInterval(tempoPergunta)
+    }
+
+    function stopPergunta(){
+        clearInterval(tempoPergunta)
+        secP=0
+        minP=0
+        hrP=0
+    }
+
+    function watchPergunta(){
+        secP++
+        if(secP==60){
+            minP++
+            secP=0
+            if(minP==60){
+                minP=0
+                hrP++
+            }
+        }
+        horaPergunta = `${twoDigits(hrP)}:${twoDigits(minP)}:${twoDigits(secP)}`
+    }
+
+    function manipularHora(){
+
+        // Menor hora
+        menorHora = new Date(Math.min(...listaHoras));
+
+        // Maior hora
+        maiorHora = new Date(Math.max(...listaHoras));
+
+        // Média de tempo
+        const avgTimestamp = listaHoras.reduce((acc, cur) => acc + cur, 0) / listaHoras.length;
+        mediaHora = new Date(avgTimestamp);
     }
 
     function voltarSelecionalDificuldade(){
@@ -399,6 +450,48 @@
         text_quiz_escolhido.innerHTML = `Dificuldade: ${quiz.dificuldade}<br> 
                 Tempo do Quiz: ${quiz.tempo} <br>
                 Tempo resposta: ${quiz.tempoResposta}`
+    }
+
+    function gravarResultado(){
+        fetch("/resultado/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                tempoTotalServer: horas,
+                mediaRespostaServer: mediaHora.toLocaleTimeString('pt-BR'),
+                acertosServer: pontuacaoFinal,
+                errosServer: tentativaIncorreta,
+                respostaRapidaServer: menorHora.toLocaleTimeString('pt-BR'),
+                respostaLongaServer : maiorHora.toLocaleTimeString('pt-BR'),
+                fkUsuarioServer : sessionStorage.ID_USUARIO,
+                fkQuizServer : quizEscolhido.idQuiz
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO gravarResultado()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar cadastrar o resultdo!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizarAguardar(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
     }
 
     function buscarQuiz(){
