@@ -1,0 +1,77 @@
+.container-grafico{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    background-color: #150B36;
+    width: 100%;
+}
+
+.titulo-grafigo{
+    border-radius: 14px;
+    border: #E70015 solid 2px;
+    color: white;
+    background-color: #FE8200;
+    padding: 10px;
+}
+
+.container-kpi{
+    display: flex;
+    gap: 50px;
+}
+
+.card-kpi{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background-color: white;
+    border-radius: 14px;
+    padding: 10px;
+    border: #FE8200 solid 2px;
+
+}
+
+.card-kpi h2{
+    font-size: 1rem;
+}
+
+.card-kpi span{
+    font-size: 1.3rem;
+}
+
+.card-grafico{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.card-pontuacao{
+    background-color: white;
+    border-radius: 14px;
+    padding: 20px;
+    border: #E70015 solid 2px;
+}
+
+.card-pontuacao h2{
+    font-size: 1rem;
+    text-decoration: underline;
+}
+
+.card-pontuacao li{
+    list-style: none;
+    padding: 5px;
+}
+
+.grafico-linha{
+    background-color: white;
+    border-radius: 14px;
+    width: 600px;
+    height: 300px;
+    padding: 20px;
+    border: #E70015 solid 2px;
+}

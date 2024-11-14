@@ -162,3 +162,39 @@ FROM quiz;
 SELECT * FROM perguntar
 WHERE fkQuiz = 1;
 
+SELECT SUM(erros) as totalErros
+FROM resultado
+WHERE fkUsuario = 1 AND fkQuiz = 1;
+
+SELECT SUM(acertos) as totalAcerto
+FROM resultado
+WHERE fkUsuario = 1 AND fkQuiz = 1;
+
+SELECT MAX(tempoTotal) as maiorTempo
+FROM resultado
+WHERE fkUsuario = 1 AND fkQuiz = 1;
+
+SELECT MIN(tempoTotal) as menorTempo
+FROM resultado
+WHERE fkUsuario = 1 AND fkQuiz = 1;
+
+SELECT SEC_TO_TIME(AVG(tempoTotal)) as maiorTempo
+FROM resultado
+WHERE fkUsuario = 1 AND fkQuiz = 1;
+
+SELECT dtResposta, acertos
+FROM resultado
+WHERE fkUsuario = 1 AND fkQuiz = 1
+ORDER by dtResposta
+LIMIT 10;
+
+SELECT acertos
+FROM resultado
+WHERE fkUsuario = 1 AND fkQuiz = 1;
+
+SELECT distinct u.nome, min(r.tempoTotal) as tempo
+FROM resultado r JOIN usuario u
+ON r.fkUsuario = u.idUsuario
+GROUP BY u.nome
+HAVING SUM(r.acertos + r.erros) = 10
+ORDER BY tempo;

@@ -6,8 +6,9 @@
     <title>Dragon Ball | Graficos</title>
     <link rel="icon" href="../../assets/imgs/icon-dragon-ball.png">
     <link rel="stylesheet" href="../../css/menu.css">
-    <link rel="stylesheet" href="../../css/conta.css">
+    <link rel="stylesheet" href="../../css/graficos.css">
     <script src="../js/sessao.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body onload="validarSessao()">
     <header class="menu_dashboard">
@@ -49,5 +50,71 @@
             </div>
         </nav>
     </header>
+    <div class="container-grafico">
+        <div>
+            <h1 class="titulo-grafigo">Desempenho no <span>Fácil</span></h1>
+        </div>
+        <div class="container-kpi">
+            <div class="card-kpi">
+                <h2>Quantidade Acertos</h2>
+                <span>5</span>
+            </div>
+            <div class="card-kpi">
+                <h2>Quantidade Erros</h2>
+                <span>5</span>
+            </div>
+            <div class="card-kpi">
+                <h2>Maior tempo</h2>
+                <span>00:02:00</span>
+            </div>
+            <div class="card-kpi">
+                <h2>Menor tempo</h2>
+                <span>00:01:00</span>
+            </div>
+            <div class="card-kpi">
+                <h2>Media tempo</h2>
+                <span>00:01:30</span>
+            </div>
+        </div>
+        <div class="card-grafico">
+            <div class="grafico-linha">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="card-pontuacao">
+                <h2>Maior pontuação</h2>
+                <ul>
+                    <li>Rodrigo</li>
+                    <li>Santos</li>
+                    <li>Julia</li>
+                    <li>Maria</li>
+                    <li>Pedro</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+<script>
+    const ctx = document.getElementById('myChart');
+  
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['11/11/2024', '12/11/2024', '13/11/2024', '14/11/2024', '15/11/2024', '16/11/2024', '16/11/2024', '16/11/2024', '16/11/2024', '16/11/2024'],
+        datasets: [{
+          label: 'Pontuação dos Quiz',
+          data: [12, 19, 3, 5, 2, 3,4,10,15,16],
+          borderWidth: 2,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+</script>
