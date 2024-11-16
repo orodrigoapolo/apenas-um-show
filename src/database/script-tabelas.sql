@@ -178,7 +178,7 @@ SELECT MIN(tempoTotal) as menorTempo
 FROM resultado
 WHERE fkUsuario = 1 AND fkQuiz = 1;
 
-SELECT SEC_TO_TIME(AVG(tempoTotal)) as maiorTempo
+SELECT SEC_TO_TIME(AVG(tempoTotal)) as mediaTempo
 FROM resultado
 WHERE fkUsuario = 1 AND fkQuiz = 1;
 
@@ -188,13 +188,14 @@ WHERE fkUsuario = 1 AND fkQuiz = 1
 ORDER by dtResposta
 LIMIT 10;
 
-SELECT acertos
+SELECT *
 FROM resultado
 WHERE fkUsuario = 1 AND fkQuiz = 1;
 
 SELECT distinct u.nome, min(r.tempoTotal) as tempo
 FROM resultado r JOIN usuario u
 ON r.fkUsuario = u.idUsuario
+WHERE r.acertos = 10
 GROUP BY u.nome
-HAVING SUM(r.acertos + r.erros) = 10
-ORDER BY tempo;
+ORDER BY tempo, r.acertos
+LIMIT 10;

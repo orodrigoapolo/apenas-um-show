@@ -1,3 +1,47 @@
+
+.container-dificuldade{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #150B36;
+    width: 100%;
+}
+
+.card-meneu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px;
+    border: #E77A0B solid 2px;
+    background-color: #D9D9D9;
+    padding: 20px;
+    gap: 10px;
+}
+
+.card-meneu h2{
+    color: #E70015;
+}
+
+.card-meneu select{
+    border-radius: 14px;
+    border: #E77A0B solid 2px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.card-meneu button{
+    border-radius: 14px;
+    border: #E70015 solid 2px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.card-meneu button:hover{
+    background-color: #E77A0B;
+    color: white;
+}
+
 .container-grafico{
     display: flex;
     flex-direction: column;

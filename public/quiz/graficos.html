@@ -10,7 +10,7 @@
     <script src="../js/sessao.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body onload="validarSessao()">
+<body onload="validarSessao(), buscarQuiz()">
     <header class="menu_dashboard">
         <nav class="menuLateral">
             <img src="../../assets/imgs/logo-dragon.png" alt="">
@@ -50,30 +50,40 @@
             </div>
         </nav>
     </header>
-    <div class="container-grafico">
+    <div class="container-dificuldade" id="menu_selecionar_dificuldade" style="display: flex;">
+        <div class="card-meneu">
+            <h2>Selecione a dificuldade</h2>
+            <select id="dificuldade_input">
+                <option value="#" selected disabled>Selecione uma dificuldade</option>
+              </select>
+              <button onclick="buscarDadosGrafico()">Selecional</button>
+        </div>
+    </div>
+
+    <div id="div_container_graficos" class="container-grafico" style="display: none;">
         <div>
-            <h1 class="titulo-grafigo">Desempenho no <span>Fácil</span></h1>
+            <h1 class="titulo-grafigo">Desempenho no <span id="nome_titulo_quiz"></span></h1>
         </div>
         <div class="container-kpi">
             <div class="card-kpi">
                 <h2>Quantidade Acertos</h2>
-                <span>5</span>
+                <span id="quantidade_acertos_kpi"></span>
             </div>
             <div class="card-kpi">
                 <h2>Quantidade Erros</h2>
-                <span>5</span>
+                <span id="quantidade_erros_kpi"></span>
             </div>
             <div class="card-kpi">
                 <h2>Maior tempo</h2>
-                <span>00:02:00</span>
+                <span id="maior_tempo_kpi"></span>
             </div>
             <div class="card-kpi">
                 <h2>Menor tempo</h2>
-                <span>00:01:00</span>
+                <span id="menor_tempo_kpi"></span>
             </div>
             <div class="card-kpi">
                 <h2>Media tempo</h2>
-                <span>00:01:30</span>
+                <span id="media_tempo_kpi"></span>
             </div>
         </div>
         <div class="card-grafico">
@@ -82,12 +92,8 @@
             </div>
             <div class="card-pontuacao">
                 <h2>Maior pontuação</h2>
-                <ul>
-                    <li>Rodrigo</li>
-                    <li>Santos</li>
-                    <li>Julia</li>
-                    <li>Maria</li>
-                    <li>Pedro</li>
+                <ul id="lista_nome_maior_pontuacao">
+
                 </ul>
             </div>
         </div>
@@ -95,9 +101,11 @@
 </body>
 </html>
 <script>
+    var listaQuiz
+    var dificuldadeSelecionada
     const ctx = document.getElementById('myChart');
   
-    new Chart(ctx, {
+    var gradico_linha = new Chart(ctx, {
       type: 'line',
       data: {
         labels: ['11/11/2024', '12/11/2024', '13/11/2024', '14/11/2024', '15/11/2024', '16/11/2024', '16/11/2024', '16/11/2024', '16/11/2024', '16/11/2024'],
@@ -117,4 +125,158 @@
         }
       }
     });
+
+    function buscarQuiz(){
+        fetch(`/quiz/`, {
+                method: "GET",
+                })
+                .then(function (resposta) {
+                    resposta.json().then((quizRes) => {
+                        listaQuiz = quizRes;
+                        quizRes.forEach(quiz => {
+                            dificuldade_input.innerHTML += `<option value="${quiz.idQuiz}">${quiz.dificuldade}</option>`
+                        });
+               
+                    });
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+    }
+
+    function buscarDadosGrafico(){
+        var dificuldadeVar = dificuldade_input.value
+       
+        if(dificuldadeVar != '#'){
+            var idQuiz = Number(dificuldadeVar)
+            for(var index = 0; index < listaQuiz.length; index++){
+                if(listaQuiz[index].idQuiz == idQuiz){
+                    dificuldadeSelecionada = listaQuiz[index]
+                }
+            }
+
+            buscarQuantidadeAcertos()
+            buscarQuantidadeErros()
+            buscarMaiorTempo()
+            buscarMenorTempo()
+            buscarMediaTempo()
+            buscarListaResultadoQuiz(gradico_linha)
+            buscarMaiorPontuacao()
+
+            menu_selecionar_dificuldade.style.display = 'none'
+            div_container_graficos.style.display = 'flex'
+            nome_titulo_quiz.innerHTML = `${dificuldadeSelecionada.dificuldade}`
+        }
+    }
+
+    function buscarQuantidadeAcertos(){
+        fetch(`/graficos/quantidade-acertos/${sessionStorage.ID_USUARIO}/${dificuldadeSelecionada.idQuiz}`, {
+                method: "GET",
+                })
+                .then(function (resposta) {
+                    resposta.json().then((r) => {
+                        quantidade_acertos_kpi.innerHTML = `${r.totalAcerto}`
+                    });
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+    }
+
+    function buscarQuantidadeErros(){
+        fetch(`/graficos/quantidade-erros/${sessionStorage.ID_USUARIO}/${dificuldadeSelecionada.idQuiz}`, {
+                method: "GET",
+                })
+                .then(function (resposta) {
+                    resposta.json().then((r) => {
+                        quantidade_erros_kpi.innerHTML = `${r.totalErros}`
+                    });
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+    }
+
+    function buscarMaiorTempo(){
+        fetch(`/graficos/maior-tempo/${sessionStorage.ID_USUARIO}/${dificuldadeSelecionada.idQuiz}`, {
+                method: "GET",
+                })
+                .then(function (resposta) {
+                    resposta.json().then((r) => {
+                        maior_tempo_kpi.innerHTML = `${r.maiorTempo}`
+                    });
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+    }
+
+    function buscarMenorTempo(){
+        fetch(`/graficos/menor-tempo/${sessionStorage.ID_USUARIO}/${dificuldadeSelecionada.idQuiz}`, {
+                method: "GET",
+                })
+                .then(function (resposta) {
+                    resposta.json().then((r) => {
+                        menor_tempo_kpi.innerHTML = `${r.menorTempo}`
+                    });
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+    }
+
+    function buscarMediaTempo(){
+        fetch(`/graficos/media-tempo/${sessionStorage.ID_USUARIO}/${dificuldadeSelecionada.idQuiz}`, {
+                method: "GET",
+                })
+                .then(function (resposta) {
+                    resposta.json().then((r) => {
+                        media_tempo_kpi.innerHTML = `${r.mediaTempo.split(".")[0]}`
+                    });
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+    }
+
+    function buscarListaResultadoQuiz(grafico){
+        fetch(`/graficos/lista-resultado-quiz/${sessionStorage.ID_USUARIO}/${dificuldadeSelecionada.idQuiz}`, {
+                method: "GET",
+                })
+                .then(function (resposta) {
+                    resposta.json().then((valores) => {
+                        valores.forEach((valor) => {
+                            if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
+                                grafico.data.labels.shift();
+                                grafico.data.datasets[0].data.shift();
+                            }
+                            var dataHora = new Date(valor.dtResposta);
+                            var dataHoraBR = dataHora.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+                            grafico.data.labels.push(dataHoraBR);
+                            grafico.data.datasets[0].data.push(parseFloat(valor.acertos));
+                            grafico.update();
+                        });
+                    });
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+    }
+
+    function buscarMaiorPontuacao(){
+        fetch(`/graficos/maior-pontuacao/`, {
+                method: "GET",
+                })
+                .then(function (resposta) {
+                    resposta.json().then((valores) => {
+                        lista_nome_maior_pontuacao.innerHTML = ""
+                        valores.forEach((valor) => {
+                            lista_nome_maior_pontuacao.innerHTML += `<li>${valor.nome}</li>`
+                        });
+                    });
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+    }
 </script>

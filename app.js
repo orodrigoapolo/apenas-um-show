@@ -25,6 +25,7 @@ var personagemRouter = require("./src/routes/personagem");
 var quizRouter = require("./src/routes/quiz");
 var perguntarRouter = require("./src/routes/perguntar");
 var resultadoRouter = require("./src/routes/resultado");
+var graficosRouter = require("./src/routes/graficos");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -42,6 +43,7 @@ app.use("/personagem", personagemRouter);
 app.use("/quiz", quizRouter);
 app.use("/perguntar", perguntarRouter);
 app.use("/resultado", resultadoRouter);
+app.use("/graficos", graficosRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
