@@ -448,8 +448,7 @@
 
     function mostrarQuizEscolhido(quiz){
         text_quiz_escolhido.innerHTML = `Dificuldade: ${quiz.dificuldade}<br> 
-                Tempo do Quiz: ${quiz.tempo} <br>
-                Tempo resposta: ${quiz.tempoResposta}`
+                Tempo do Quiz: ${quiz.tempo} <br>`
     }
 
     function gravarResultado(){
@@ -466,7 +465,10 @@
                 respostaRapidaServer: menorHora.toLocaleTimeString('pt-BR'),
                 respostaLongaServer : maiorHora.toLocaleTimeString('pt-BR'),
                 fkUsuarioServer : sessionStorage.ID_USUARIO,
-                fkQuizServer : quizEscolhido.idQuiz
+                fkQuizServer : quizEscolhido.idQuiz,
+                perguntasRespondidasServer: totalPerguntasRespondidas
+
+                
             })
         }).then(function (resposta) {
             console.log("ESTOU NO THEN DO gravarResultado()!")

@@ -23,7 +23,6 @@ CREATE TABLE quiz (
     idQuiz INT PRIMARY KEY AUTO_INCREMENT,
     dificuldade VARCHAR(45) NOT NULL,
     tempo TIME NOT NULL,
-    tempoResposta TIME NOT NULL,
     CONSTRAINT chkDificuldade CHECK (dificuldade IN ('fácil', 'média', 'difícil'))
 );
 
@@ -42,16 +41,17 @@ CREATE TABLE perguntar (
 );
 
 CREATE TABLE resultado (
-    idResposta INT AUTO_INCREMENT,
+    idResultado INT AUTO_INCREMENT,
 	fkUsuario INT,
     fkQuiz INT,
-    CONSTRAINT pkCompostaRespota PRIMARY KEY (idResposta, fkUsuario, fkQuiz),
+    CONSTRAINT pkCompostaRespota PRIMARY KEY (idResultado, fkUsuario, fkQuiz),
     tempoTotal TIME,
     mediaResposta TIME,
     acertos INT,
     erros INT,
     respostaRapida TIME,
     respostaLonga TIME,
+    perguntasRespondidas INT,
     dtResposta DATETIME DEFAULT current_timestamp,
     FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
     FOREIGN KEY (fkQuiz) REFERENCES quiz(idQuiz)
@@ -73,10 +73,10 @@ INSERT INTO usuario (nome, email, senha, fkPersonagem) VALUES
 ('Piccolo', 'piccolo@dragonball.com', '12345678', 4);
 
 -- Inserindo quizzes
-INSERT INTO quiz (dificuldade, tempo, tempoResposta) 
-VALUES ('Fácil', '00:10:00', '00:01:00'),
-		('Média', '00:20:00', '00:02:00'),
-		('Difícil', '00:30:00', '00:03:00');
+INSERT INTO quiz (dificuldade, tempo) 
+VALUES ('Fácil', '00:10:00'),
+		('Média', '00:20:00'),
+		('Difícil', '00:30:00');
         
         
 -- UPDATE quiz set tempo = '00:01:00' where idQuiz = 1;
@@ -121,18 +121,18 @@ VALUES ('Quem treinou Goku e Vegeta no Universo 6?', 'Champa', 'Vados', 'Whis', 
 		('Qual é o nome da espada lendária que Gohan usa na saga de Majin Boo?', 'Z Sword', 'Spirit Sword', 'Energy Sword', 'Kai Sword', 'Z Sword', 'A Z Sword é uma espada lendária que Gohan tenta usar contra Majin Boo.', 3);
 
 
--- Inserindo respostas
-INSERT INTO resultado (tempoTotal, mediaResposta, acertos, erros, respostaRapida, respostaLonga, dtResposta, fkUsuario, fkQuiz) 
-VALUES ('00:30:00', '00:15:00', 6, 4, '00:20:00', '00:40:00', '2024-11-09 12:30:00', 1, 1),
-		('00:45:00', '00:22:30', 1, 9, '00:30:00', '00:50:00', '2024-11-09 13:00:00', 2, 2),
-        ('01:00:00', '00:20:00', 4, 6, '00:25:00', '01:05:00', '2024-11-09 13:30:00', 3, 3),
-        ('00:35:00', '00:17:30', 9, 1, '00:18:00', '00:37:00', '2024-11-09 14:00:00', 1, 1),
-        ('00:50:00', '00:25:00', 10, 0, '00:28:00', '00:55:00', '2024-11-09 14:30:00', 2, 2),
-        ('00:55:00', '00:27:30', 2, 8, '00:30:00', '01:00:00', '2024-11-09 15:00:00', 3, 3),
-        ('00:40:00', '00:20:00', 5, 5, '00:22:00', '00:45:00', '2024-11-09 15:30:00', 1, 1),
-        ('01:05:00', '00:32:30', 7, 3, '00:35:00', '01:10:00', '2024-11-09 16:00:00', 2, 2),
-        ('00:48:00', '00:24:00', 3, 7, '00:26:00', '00:50:00', '2024-11-09 16:30:00', 3, 3),
-        ('00:52:00', '00:26:00', 10, 0, '00:27:00', '00:54:00', '2024-11-09 17:00:00', 1, 1);
+-- Inserindo resultado
+INSERT INTO resultado (tempoTotal, mediaResposta, acertos, erros, perguntasRespondidas, respostaRapida, respostaLonga, dtResposta, fkUsuario, fkQuiz) 
+VALUES ('00:30:00', '00:15:00', 6, 4, 10, '00:20:00', '00:40:00', '2024-11-09 12:30:00', 1, 1),
+		('00:45:00', '00:22:30', 1, 9, 10, '00:30:00', '00:50:00', '2024-11-09 13:00:00', 2, 2),
+        ('01:00:00', '00:20:00', 4, 6, 10, '00:25:00', '01:05:00', '2024-11-09 13:30:00', 3, 3),
+        ('00:35:00', '00:17:30', 9, 1, 10, '00:18:00', '00:37:00', '2024-11-09 14:00:00', 1, 1),
+        ('00:50:00', '00:25:00', 10, 0, 10, '00:28:00', '00:55:00', '2024-11-09 14:30:00', 2, 2),
+        ('00:55:00', '00:27:30', 2, 8, 10, '00:30:00', '01:00:00', '2024-11-09 15:00:00', 3, 3),
+        ('00:40:00', '00:20:00', 5, 5, 10, '00:22:00', '00:45:00', '2024-11-09 15:30:00', 1, 1),
+        ('01:05:00', '00:32:30', 7, 3, 10, '00:35:00', '01:10:00', '2024-11-09 16:00:00', 2, 2),
+        ('00:48:00', '00:24:00', 3, 7, 10, '00:26:00', '00:50:00', '2024-11-09 16:30:00', 3, 3),
+        ('00:52:00', '00:26:00', 10, 0, 10, '00:27:00', '00:54:00', '2024-11-09 17:00:00', 1, 1);
 
 
 
@@ -145,7 +145,6 @@ SELECT * FROM quiz;
 SELECT * FROM resultado;
 
 SELECT * FROM perguntar;
-
 
 SELECT idUsuario, email, usuario.nome, senha, personagem.nome as personagem
 FROM usuario JOIN personagem
@@ -172,19 +171,19 @@ WHERE fkUsuario = 1 AND fkQuiz = 1;
 
 SELECT MAX(tempoTotal) as maiorTempo
 FROM resultado
-WHERE fkUsuario = 1 AND fkQuiz = 1;
+WHERE fkUsuario = 1 AND fkQuiz = 1 AND perguntasRespondidas = 10; 
 
 SELECT MIN(tempoTotal) as menorTempo
 FROM resultado
-WHERE fkUsuario = 1 AND fkQuiz = 1;
+WHERE fkUsuario = 1 AND fkQuiz = 1 AND perguntasRespondidas = 10;
 
 SELECT SEC_TO_TIME(AVG(tempoTotal)) as mediaTempo
 FROM resultado
-WHERE fkUsuario = 1 AND fkQuiz = 1;
+WHERE fkUsuario = 1 AND fkQuiz = 1 AND perguntasRespondidas = 10;
 
 SELECT dtResposta, acertos
 FROM resultado
-WHERE fkUsuario = 1 AND fkQuiz = 1
+WHERE fkUsuario = 1 AND fkQuiz = 1 AND perguntasRespondidas = 10
 ORDER by dtResposta
 LIMIT 10;
 
@@ -192,10 +191,31 @@ SELECT *
 FROM resultado
 WHERE fkUsuario = 1 AND fkQuiz = 1;
 
-SELECT distinct u.nome, min(r.tempoTotal) as tempo
-FROM resultado r JOIN usuario u
-ON r.fkUsuario = u.idUsuario
-WHERE r.acertos = 10
-GROUP BY u.nome
-ORDER BY tempo, r.acertos
+
+SELECT DISTINCT u.nome, r.tempoTotal, r.acertos
+FROM resultado r
+JOIN usuario u ON r.fkUsuario = u.idUsuario
+WHERE perguntasRespondidas = 10
+ORDER BY r.acertos DESC, r.tempoTotal ASC
 LIMIT 10;
+
+
+WITH RankedResults AS (
+  SELECT 
+    u.nome, 
+    r.tempoTotal, 
+    r.acertos,
+    ROW_NUMBER() OVER (
+      PARTITION BY u.idUsuario 
+      ORDER BY r.acertos DESC, r.tempoTotal ASC
+    ) AS ranking
+  FROM resultado r
+  JOIN usuario u ON r.fkUsuario = u.idUsuario
+  WHERE perguntasRespondidas = 10
+)
+SELECT nome, tempoTotal, acertos
+FROM RankedResults
+WHERE ranking = 1
+ORDER BY acertos DESC, tempoTotal ASC
+LIMIT 10;
+

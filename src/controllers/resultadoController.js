@@ -9,6 +9,7 @@ function cadastrar(req, res) {
     var respostaLonga = req.body.respostaLongaServer;
     var fkUsuario = req.body.fkUsuarioServer;
     var fkQuiz = req.body.fkQuizServer;
+    var perguntasRespondidas = req.body.perguntasRespondidasServer;
 
 
     // Faça as validações dos valores
@@ -28,9 +29,11 @@ function cadastrar(req, res) {
         res.status(400).send("Seu fkUsuario está undefined!");
     } else if (fkQuiz == undefined) {
         res.status(400).send("Seu fkQuiz está undefined!");
-    } else {
+    }  else if (perguntasRespondidas == undefined) {
+        res.status(400).send("Seu perguntasRespondidas está undefined!");
+    }else {
 
-        resultadoModel.cadastrar(tempoTotal, mediaResposta, acertos, erros, respostaRapida, respostaLonga, fkUsuario, fkQuiz)
+        resultadoModel.cadastrar(tempoTotal, mediaResposta, acertos, erros, respostaRapida, respostaLonga, fkUsuario, fkQuiz, perguntasRespondidas)
             .then(function (resultado){
                 res.status(201).json(resultado)
             }).catch(
