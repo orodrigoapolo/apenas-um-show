@@ -2,7 +2,7 @@ var database = require("../database/config");
 
 function listaQuiz() {
 
-  var instrucaoSql = `SELECT idQuiz, dificuldade, tempo, tempoResposta
+  var instrucaoSql = `SELECT idQuiz, dificuldade, tempo
                       FROM quiz;`;
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -11,7 +11,7 @@ function listaQuiz() {
 
 function buscarQuiz(id) {
   
-  var instrucaoSql = `SELECT idQuiz, dificuldade, tempo, tempoResposta
+  var instrucaoSql = `SELECT idQuiz, dificuldade, tempo
                       FROM quiz
                       WHERE idQuiz = ${id};`;
 
