@@ -264,7 +264,7 @@
     }
 
     function buscarMaiorPontuacao(){
-        fetch(`/graficos/maior-pontuacao/`, {
+        fetch(`/graficos/maior-pontuacao/${dificuldadeSelecionada.idQuiz}`, {
                 method: "GET",
                 })
                 .then(function (resposta) {

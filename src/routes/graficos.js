@@ -27,7 +27,7 @@ router.get("/lista-resultado-quiz/:usuarioFk/:quizId", function (req, res) {
   graficosController.listaResultadoQuiz(req, res);
 });
 
-router.get("/maior-pontuacao/", function (req, res) {
+router.get("/maior-pontuacao/:quizId", function (req, res) {
   graficosController.maiorPontuacao(req, res);
 });
 

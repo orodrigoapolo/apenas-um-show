@@ -139,7 +139,8 @@ function listaResultadoQuiz(req, res) {
 }
 
 function maiorPontuacao(req, res) {
-  graficosModel.maiorPontuacao().then((resultado) => {
+  var idQuiz = req.params.quizId;
+  graficosModel.maiorPontuacao(idQuiz).then((resultado) => {
     if (resultado.length > 0) {
       res.status(200).json(resultado);
     } else {

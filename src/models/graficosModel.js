@@ -62,39 +62,33 @@ function listaResultadoQuiz(idUsuario, idQuiz) {
   return database.executar(instrucaoSql);
 }
 
-function maiorPontuacao() {
+function maiorPontuacao(idQuiz) {
 
-  var instrucaoSql = `select distinct usuario.nome, c.tempoTotal as Tempo, b.acertou as MaiorAcerto, a.totalite as MenorTempo, d.acertos as 'Acerto < Tempo'
+  var instrucaoSql = `select distinct usuario.nome, c.tempoTotal as Tempo, b.acertou as MaiorAcerto
 
-from (select nome, min(tempoTotal) as totalite from resultado join usuario on fkUsuario = idUsuario
+                      from (select nome, max(acertos) as acertou from resultado join usuario on fkUsuario = idUsuario
 
-                               where perguntasRespondidas = 10 group by nome) as a
+                      where fkQuiz = ${idQuiz} AND perguntasRespondidas = 10 group by nome) as b
 
-                join (select nome, max(acertos) as acertou from resultado join usuario on fkUsuario = idUsuario
+                                      join (select idUsuario as cc, nome, tempoTotal, acertos from resultado join usuario on fkUsuario = idUsuario
 
-where perguntasRespondidas = 10 group by nome) as b
+                      where fkQuiz = ${idQuiz} AND perguntasRespondidas = 10) as c
 
-                join (select idUsuario as cc, nome, tempoTotal, acertos from resultado join usuario on fkUsuario = idUsuario
+                                      join (select idUsuario as dd, nome, tempoTotal, acertos from resultado join usuario on fkUsuario = idUsuario
 
-where perguntasRespondidas = 10) as c
+                      where fkQuiz = ${idQuiz} AND perguntasRespondidas = 10) as d
 
-                join (select idUsuario as dd, nome, tempoTotal, acertos from resultado join usuario on fkUsuario = idUsuario
+                                      join resultado join usuario on fkUsuario = idUsuario
 
-where perguntasRespondidas = 10) as d
+                                                    where fkQuiz = ${idQuiz} AND perguntasRespondidas = 10 and b.nome = usuario.nome
 
-                join resultado join usuario on fkUsuario = idUsuario
+                              and b.nome = usuario.nome
 
-                               where perguntasRespondidas = 10 and a.nome = usuario.nome
+                              and usuario.idUsuario = c.cc
 
-        and b.nome = usuario.nome
+                              and c.acertos = b.acertou
 
-        and usuario.idUsuario = c.cc
-
-        and c.acertos = b.acertou
-
-        and d.tempoTotal = a.totalite
-
-        order by b.acertou desc;`;
+                              order by b.acertou desc, c.tempoTotal;`;
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
   return database.executar(instrucaoSql);

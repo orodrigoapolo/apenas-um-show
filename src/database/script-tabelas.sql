@@ -222,27 +222,23 @@ ORDER BY acertos DESC, tempoTotal ASC
 LIMIT 10;
 
 
-select distinct usuario.nome, c.tempoTotal as Tempo, b.acertou as MaiorAcerto, a.totalite as MenorTempo, d.acertos as 'Acerto < Tempo'
+select distinct usuario.nome, c.tempoTotal as Tempo, b.acertou as MaiorAcerto
 
-from (select nome, min(tempoTotal) as totalite from resultado join usuario on fkUsuario = idUsuario
+from (select nome, max(acertos) as acertou from resultado join usuario on fkUsuario = idUsuario
 
-                               where perguntasRespondidas = 10 group by nome) as a
-
-                join (select nome, max(acertos) as acertou from resultado join usuario on fkUsuario = idUsuario
-
-where perguntasRespondidas = 10 group by nome) as b
+where fkQuiz = 1 AND perguntasRespondidas = 10 group by nome) as b
 
                 join (select idUsuario as cc, nome, tempoTotal, acertos from resultado join usuario on fkUsuario = idUsuario
 
-where perguntasRespondidas = 10) as c
+where fkQuiz = 1 AND perguntasRespondidas = 10) as c
 
                 join (select idUsuario as dd, nome, tempoTotal, acertos from resultado join usuario on fkUsuario = idUsuario
 
-where perguntasRespondidas = 10) as d
+where fkQuiz = 1 AND perguntasRespondidas = 10) as d
 
                 join resultado join usuario on fkUsuario = idUsuario
 
-                               where perguntasRespondidas = 10 and a.nome = usuario.nome
+                               where fkQuiz = 1 AND perguntasRespondidas = 10 and b.nome = usuario.nome
 
         and b.nome = usuario.nome
 
@@ -250,7 +246,7 @@ where perguntasRespondidas = 10) as d
 
         and c.acertos = b.acertou
 
-        and d.tempoTotal = a.totalite
+        order by b.acertou desc, c.tempoTotal;
+        
 
-        order by b.acertou desc;
 
