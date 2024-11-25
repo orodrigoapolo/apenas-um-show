@@ -54,7 +54,7 @@ function listaResultadoQuiz(idUsuario, idQuiz) {
 
   var instrucaoSql = `SELECT dtResposta, acertos
                       FROM resultado
-                      WHERE ${idUsuario} AND fkQuiz = ${idQuiz} AND perguntasRespondidas = 10
+                      WHERE fkUsuario = ${idUsuario} AND fkQuiz = ${idQuiz} AND perguntasRespondidas = 10
                       ORDER by dtResposta
                       LIMIT 10;`;
 
