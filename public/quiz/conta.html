@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../css/conta.css">
     <script src="../js/sessao.js"></script>
 </head>
-<body onload="validarSessao()">
+<body onload="validarSessao(), listarPersonagens()">
     <header class="menu_dashboard">
         <nav class="menuLateral">
             <img src="../../assets/imgs/logo-dragon.png" alt="">
@@ -49,5 +49,55 @@
             </div>
         </nav>
     </header>
+    <div class="container-conta">
+        <div class="car-conta">
+            <div class="card-perfil">
+                <img src="../../assets/imgs/goku-rosto.png" alt="">
+                <select id="personagem_input">
+                    <option value="#" selected disabled>Selecione um Personagens</option>
+                </select>
+                <label for="Nome">Nome</label>
+                <input type="text">
+                <label for="Email">Email</label>
+                <input type="text">
+                <button>Atualizar</button>
+            </div>
+            <div class="card-perfil">
+                <label for="">Senha Atual</label>
+                <input type="text">
+                <div>
+                    <label for="">Nova Senha</label>
+                    <input type="text">
+                    <label for="">Confirmar Senha</label>
+
+                </div>
+                <button>Atualizar</button>
+            </div>
+        </div>
+
+    </div>
 </body>
 </html>
+<script>
+    let listaPersonagensCadastrado = [];
+
+      // Listando personagem cadastrado
+  function listarPersonagens() {
+    fetch("/personagem/", {
+      method: "GET",
+    })
+      .then(function (resposta) {
+        resposta.json().then((personagens) => {
+          personagens.forEach((personagem) => {
+            listaPersonagensCadastrado.push(personagem);
+            personagem_input.innerHTML += `<option value="${personagem.idPersonagem}">${personagem.nome}</option>`
+          });
+          console.log("listaPersonagensCadastrado")
+          console.log(listaPersonagensCadastrado)
+        });
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+</script>

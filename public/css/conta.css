@@ -1,0 +1,7 @@
+.container-conta{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #150B36;
+    width: 100%;
+}
