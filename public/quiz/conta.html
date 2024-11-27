@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,18 +10,24 @@
     <link rel="stylesheet" href="../../css/conta.css">
     <script src="../js/sessao.js"></script>
 </head>
-<body onload="validarSessao(), listarPersonagens()">
+
+<body onload="validarSessao(), listarPersonagens(), dadoPerfil()">
+    <div class="alerta_erro">
+        <div class="card_erro" id="cardErro">
+            <span id="mensagem_erro"></span>
+        </div>
+    </div>
     <header class="menu_dashboard">
         <nav class="menuLateral">
             <img src="../../assets/imgs/logo-dragon.png" alt="">
             <ul class="container_lista">
-                <li class="menu_item" >
-                    <div class="container_img disable" >
+                <li class="menu_item">
+                    <div class="container_img disable">
                         <img src="../../assets/imgs/inco-quiz.png" alt="">
                     </div>
                     <a href="quiz.html">Quiz</a>
                 </li>
-                <li class="menu_item" >
+                <li class="menu_item">
                     <div class="container_img disable" style="height: 25px;">
                         <img src="../../assets/imgs/inco-grafico.png" alt="">
                     </div>
@@ -32,7 +39,7 @@
                     </div>
                     <a href="conta.html">Conta</a>
                 </li>
-    
+
                 <li class="menu_item" onclick="limparSessao()">
                     <div class="container_img disable">
                         <img src="../../assets/imgs/sair.svg" alt="">
@@ -50,54 +57,222 @@
         </nav>
     </header>
     <div class="container-conta">
-        <div class="car-conta">
+        <div class="conta-container">
             <div class="card-perfil">
-                <img src="../../assets/imgs/goku-rosto.png" alt="">
-                <select id="personagem_input">
+                <div class="img-perfil">
+                    <img id="img_perfil" src="../../assets/imgs/goku-rosto.png" alt="">
+                </div>
+                <select id="personagem_input" class="input-perfil">
                     <option value="#" selected disabled>Selecione um Personagens</option>
                 </select>
                 <label for="Nome">Nome</label>
-                <input type="text">
+                <input id="input_nome" class="input-perfil" type="text">
                 <label for="Email">Email</label>
-                <input type="text">
-                <button>Atualizar</button>
+                <input id="input_email" class="input-perfil" type="text">
+                <div class="img-perfil">
+                    <button onclick="atualizaUsuario()" class="btn-atualizar">Atualizar</button>
+                </div>
             </div>
             <div class="card-perfil">
                 <label for="">Senha Atual</label>
-                <input type="text">
-                <div>
+                <input id="senha_antiga" class="input-perfil" type="password">
+                <div class="card-senha">
                     <label for="">Nova Senha</label>
-                    <input type="text">
+                    <input id="senha_input" class="input-perfil" type="password">
                     <label for="">Confirmar Senha</label>
-
+                    <input id="confirmacao_senha_input" class="input-perfil" type="password">
                 </div>
-                <button>Atualizar</button>
+                <div class="img-perfil">
+                    <button onclick="atualizarSenha()" class="btn-atualizar">Atualizar</button>
+                </div>
             </div>
         </div>
 
     </div>
 </body>
+
 </html>
 <script>
     let listaPersonagensCadastrado = [];
 
-      // Listando personagem cadastrado
-  function listarPersonagens() {
-    fetch("/personagem/", {
-      method: "GET",
-    })
-      .then(function (resposta) {
-        resposta.json().then((personagens) => {
-          personagens.forEach((personagem) => {
-            listaPersonagensCadastrado.push(personagem);
-            personagem_input.innerHTML += `<option value="${personagem.idPersonagem}">${personagem.nome}</option>`
-          });
-          console.log("listaPersonagensCadastrado")
-          console.log(listaPersonagensCadastrado)
+    // Listando personagem cadastrado
+    function listarPersonagens() {
+        fetch("/personagem/", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                resposta.json().then((personagens) => {
+                    personagens.forEach((personagem) => {
+                        listaPersonagensCadastrado.push(personagem);
+                        personagem_input.innerHTML += `<option value="${personagem.idPersonagem}">${personagem.nome}</option>`
+                    });
+                    console.log("listaPersonagensCadastrado")
+                    console.log(listaPersonagensCadastrado)
+                });
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
+    function atualizaUsuario(){
+        var nomeVar = input_nome.value
+        var emailVar = input_email.value
+        var personagemVar = personagem_input.value 
+
+        if(nomeVar == null || emailVar == null || personagemVar == null){
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "Os campos não pode ser vazio";
+            mensagemErroDiv();
+            return false;
+        }
+
+        fetch(`/usuarios/atualizar-usuario/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idUsuarioServer: sessionStorage.ID_USUARIO,
+                nomeServer: nomeVar,
+                emailServer: emailVar,
+                personagemServer: personagemVar
+            }),
+        })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then((valor) => {
+                    console.log(valor)
+                    sessionStorage.EMAIL_USUARIO = valor.email;
+                    sessionStorage.NOME_USUARIO = valor.nome;
+                    sessionStorage.ID_USUARIO = valor.id;
+                    //sessionStorage.PERSONAGEM_USUARIO = valor.personagem
+                    cardErro.style.display = "block";
+                    mensagem_erro.innerHTML = "Atualizado os compos";
+
+                    mensagemErroDiv();
+                });
+            }else{
+                console.log("Houve um erro ao tentar atualizar a senha!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    cardErro.style.display = "block";
+                    mensagem_erro.innerHTML = `${texto}`
+                    mensagemErroDiv();
+                });
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
         });
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
-  }
+    }
+
+    function atualizarSenha() {
+        var senhaAntigaVar = senha_antiga.value
+        var senhaVar = senha_input.value;
+        var confirmacaoSenhaVar = confirmacao_senha_input.value;
+
+        var tem_especial = senhaVar.includes("!") || senhaVar.includes("@") || senhaVar.includes("#") ||
+            senhaVar.includes("$") || senhaVar.includes("%") || senhaVar.includes("&");
+
+        var possui_numero = senhaVar.includes("0") || senhaVar.includes("1") || senhaVar.includes("2") ||
+            senhaVar.includes("3") || senhaVar.includes("4") || senhaVar.includes("5") ||
+            senhaVar.includes("6") || senhaVar.includes("7") || senhaVar.includes("8") ||
+            senhaVar.includes("9");
+
+        var temMaiuscula = senhaVar != senhaVar.toLowerCase();
+        var temMinuscula = senhaVar != senhaVar.toUpperCase();
+
+        if (senhaVar != confirmacaoSenhaVar) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "O compo senha e confirmar senha tem que ser iguais";
+
+            mensagemErroDiv();
+            return false;
+        } else if (senhaVar.length < 6) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "O compo senha tem que ser maior do 6 caracteres";
+
+            mensagemErroDiv();
+            return false;
+        } else if (!tem_especial || !possui_numero || !temMaiuscula || !temMinuscula) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "A senha precisa ter:<br>" +
+                "- Ao menos um caractere especial (! @ # $ % &)<br>" +
+                "- Ao menos uma letra maiúscula<br>" +
+                "- Ao menos um numero <br>" +
+                "- Ao menos uma letra minúscula";
+
+            mensagemErroDiv();
+            return false;
+        } else {
+            setInterval(sumirMensagem, 5000);
+        }
+
+        fetch(`/usuarios/atualizar-senha/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idUsuarioServer: sessionStorage.ID_USUARIO,
+                senhaAntigaServer: senhaAntigaVar,
+                senhaServer: senhaVar
+            }),
+        })
+        .then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then((valor) => {
+                    console.log(valor)
+                    cardErro.style.display = "block";
+                    mensagem_erro.innerHTML = "Senhar Atualizada";
+
+                    mensagemErroDiv();
+                });
+            }else{
+                console.log("Houve um erro ao tentar atualizar a senha!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    cardErro.style.display = "block";
+                    mensagem_erro.innerHTML = `${texto}`
+                    mensagemErroDiv();
+                });
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+
+    }
+
+
+    function dadoPerfil() {
+        var email = sessionStorage.EMAIL_USUARIO;
+        var nome = sessionStorage.NOME_USUARIO;
+        var personagem = sessionStorage.PERSONAGEM_USUARIO;
+
+        var b_usuario = document.getElementById("b_usuario");
+
+        if (email != null && nome != null) {
+            input_nome.value = nome;
+            input_email.value = email;
+            img_perfil.src = `../../assets/imgs/${personagem}-rosto.png`.toLocaleLowerCase();
+        } else {
+            window.location = "../login.html";
+        }
+    }
+
+    function mensagemErroDiv(texto) {
+        var divErrosLogin = document.getElementById("div_erros_login");
+        if (texto) {
+            divErrosLogin.style.display = "flex";
+            divErrosLogin.innerHTML = texto;
+        }
+    }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none";
+    }
 </script>

@@ -42,6 +42,83 @@ function autenticar(req, res) {
 
 }
 
+function atualizarSenha(req, res){
+    var id = req.body.idUsuarioServer;
+    var senhaAntiga = req.body.senhaAntigaServer;
+    var senha = req.body.senhaServer;
+
+    if (id == undefined) {
+        res.status(400).send("Seu id está undefined!");
+    } else if (senhaAntiga == undefined) {
+        res.status(400).send("Seu senhaAntiga está undefined!");
+    } else if (senha == undefined) {
+        res.status(400).send("Sua senha está undefined!");
+    } else {
+
+        usuarioModel.buscarSenha(id, senhaAntiga).then(function (valor){
+            if(valor.length > 0){
+                usuarioModel.atualizarSenha(id, senha)
+                .then(
+                    function (resultado) {
+                        res.json({'atualizou': true});
+                    }
+                ).catch(
+                    function (erro) {
+                        console.log(erro);
+                        console.log(
+                            "\nHouve um erro ao realizar o cadastro! Erro: ",
+                            erro.sqlMessage
+                        );
+                        res.status(500).json(erro.sqlMessage);
+                    }
+                );
+            }else{
+                res.status(409).send("Senha atual errada!")
+            }
+        })
+    }
+}
+
+function atualizarUsuario(req, res){
+    var id = req.body.idUsuarioServer;
+    var nome = req.body.nomeServer;
+    var email = req.body.emailServer;
+    var personagem = req.body.personagemServer;
+
+    // Faça as validações dos valores
+    if (id == undefined) {
+        res.status(400).send("Seu id está undefined!");
+    }else if (nome == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    } else if (email == undefined) {
+        res.status(400).send("Seu email está undefined!");
+    } else if (personagem == undefined) {
+        res.status(400).send("Seu personagem está undefined!");
+    } else {
+        usuarioModel.buscarUsuarioEmail(email).then(function (listaEmail){
+            if(listaEmail.length > 1){
+                res.status(409).send("E-mail já cadastrado")
+            }else{
+                usuarioModel.atualizarUsuario(id, nome, email, personagem)
+                .then(
+                    function (resultado) {
+                        res.json({id, nome, email, personagem});
+                    }
+                ).catch(
+                    function (erro) {
+                        console.log(erro);
+                        console.log(
+                            "\nHouve um erro ao realizar atualização do usuario! Erro: ",
+                            erro.sqlMessage
+                        );
+                        res.status(500).json(erro.sqlMessage);
+                    }
+                );
+            }
+        })
+    }
+}
+
 function cadastrar(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var nome = req.body.nomeServer;
@@ -86,5 +163,7 @@ function cadastrar(req, res) {
 
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    atualizarSenha,
+    atualizarUsuario
 }

@@ -24,6 +24,18 @@ function cadastrar(nome, email, senha, personagem) {
     return database.executar(instrucaoSql);
 }
 
+function atualizarUsuario(id, nome, email, personagem){
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", id, nome, email, personagem);
+
+    var instrucaoSql = `
+        UPDATE usuario 
+        SET nome = '${nome}', email = '${email}', fkPersonagem = ${personagem}
+        WHERE idUsuario = ${id};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function buscarUsuarioEmail(email) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email)
     var instrucaoSql = `
@@ -35,8 +47,33 @@ function buscarUsuarioEmail(email) {
     return database.executar(instrucaoSql);
 }
 
+function buscarSenha(id, senha){
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", id, senha)
+    var instrucaoSql = `
+        SELECT *
+        FROM usuario
+        WHERE idUsuario = ${id} AND senha = '${senha}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function atualizarSenha(id, senha){
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", id, senha)
+    var instrucaoSql = `
+        UPDATE usuario
+        SET senha = '${senha}'
+        WHERE idUsuario = '${id}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
-    buscarUsuarioEmail
+    buscarUsuarioEmail,
+    buscarSenha,
+    atualizarSenha,
+    atualizarUsuario
 };
