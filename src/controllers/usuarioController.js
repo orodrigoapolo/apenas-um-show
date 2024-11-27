@@ -99,21 +99,26 @@ function atualizarUsuario(req, res){
             if(listaEmail.length > 1){
                 res.status(409).send("E-mail já cadastrado")
             }else{
-                usuarioModel.atualizarUsuario(id, nome, email, personagem)
-                .then(
-                    function (resultado) {
-                        res.json({id, nome, email, personagem});
-                    }
-                ).catch(
-                    function (erro) {
-                        console.log(erro);
-                        console.log(
-                            "\nHouve um erro ao realizar atualização do usuario! Erro: ",
-                            erro.sqlMessage
-                        );
-                        res.status(500).json(erro.sqlMessage);
-                    }
-                );
+                if(listaEmail[0].idUsuario == id){
+                    usuarioModel.atualizarUsuario(id, nome, email, personagem)
+                    .then(
+                        function (resultado) {
+                            res.json({id, nome, email, personagem});
+                        }
+                    ).catch(
+                        function (erro) {
+                            console.log(erro);
+                            console.log(
+                                "\nHouve um erro ao realizar atualização do usuario! Erro: ",
+                                erro.sqlMessage
+                            );
+                            res.status(500).json(erro.sqlMessage);
+                        }
+                    );
+                }else{
+                    res.status(409).send("E-mail já cadastrado")
+                }
+                
             }
         })
     }

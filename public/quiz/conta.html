@@ -60,7 +60,7 @@
         <div class="conta-container">
             <div class="card-perfil">
                 <div class="img-perfil">
-                    <img id="img_perfil" src="../../assets/imgs/goku-rosto.png" alt="">
+                    <img id="img_perfil" src="../../assets/imgs/2-rosto.png" alt="">
                 </div>
                 <select id="personagem_input" class="input-perfil">
                     <option value="#" selected disabled>Selecione um Personagens</option>
@@ -104,7 +104,11 @@
                 resposta.json().then((personagens) => {
                     personagens.forEach((personagem) => {
                         listaPersonagensCadastrado.push(personagem);
-                        personagem_input.innerHTML += `<option value="${personagem.idPersonagem}">${personagem.nome}</option>`
+                        if(sessionStorage.PERSONAGEM_USUARIO == personagem.idPersonagem){
+                            personagem_input.innerHTML += `<option selected value="${personagem.idPersonagem}">${personagem.nome}</option>`
+                        }else{
+                             personagem_input.innerHTML += `<option value="${personagem.idPersonagem}">${personagem.nome}</option>`
+                        }
                     });
                     console.log("listaPersonagensCadastrado")
                     console.log(listaPersonagensCadastrado)
@@ -146,7 +150,10 @@
                     sessionStorage.EMAIL_USUARIO = valor.email;
                     sessionStorage.NOME_USUARIO = valor.nome;
                     sessionStorage.ID_USUARIO = valor.id;
-                    //sessionStorage.PERSONAGEM_USUARIO = valor.personagem
+                    sessionStorage.PERSONAGEM_USUARIO = valor.personagem
+                    personagemUsuario.src = `../../assets/imgs/${sessionStorage.PERSONAGEM_USUARIO}-rosto.png`
+        
+                    img_perfil.src = `../../assets/imgs/${sessionStorage.PERSONAGEM_USUARIO}-rosto.png`
                     cardErro.style.display = "block";
                     mensagem_erro.innerHTML = "Atualizado os compos";
 
@@ -259,8 +266,6 @@
             input_nome.value = nome;
             input_email.value = email;
             img_perfil.src = `../../assets/imgs/${personagem}-rosto.png`.toLocaleLowerCase();
-        } else {
-            window.location = "../login.html";
         }
     }
 

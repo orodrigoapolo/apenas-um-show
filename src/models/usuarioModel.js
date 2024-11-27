@@ -3,7 +3,7 @@ var database = require("../database/config")
 function autenticar(email, senha) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email, senha)
     var instrucaoSql = `
-        SELECT idUsuario, email, usuario.nome, senha, personagem.nome as personagem
+        SELECT idUsuario, email, usuario.nome, senha, fkPersonagem as personagem
         FROM usuario JOIN personagem
         ON usuario.fkPersonagem = personagem.idPersonagem
         WHERE email = '${email}' AND senha = '${senha}';
@@ -39,7 +39,7 @@ function atualizarUsuario(id, nome, email, personagem){
 function buscarUsuarioEmail(email) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email)
     var instrucaoSql = `
-        SELECT email
+        SELECT email, idUsuario
         FROM usuario
         WHERE email = '${email}';
     `;

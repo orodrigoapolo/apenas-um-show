@@ -9,7 +9,7 @@ function validarSessao() {
     if (email != null && nome != null) {
         nomeUsuario.innerHTML = nome;
         emailUsuario.innerHTML = email;
-        personagemUsuario.src = `../../assets/imgs/${personagem}-rosto.png`.toLocaleLowerCase();
+        personagemUsuario.src = `../../assets/imgs/${personagem}-rosto.png`
     } else {
         window.location = "../login.html";
     }
